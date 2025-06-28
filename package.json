@@ -1,0 +1,28 @@
+{
+  "name": "myswagger",
+  "version": "1.0.0",
+  "scripts": {
+    "dev": "npx ts-node src/dev",
+    "build": "npx tsc"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "dependencies": {
+    "@fastify/multipart": "*",
+    "@fastify/static": "*",
+    "axios": "*",
+    "cheerio": "*",
+    "fastify": "*",
+    "file-type": "16.5.3",
+    "qs": "*"
+  },
+  "devDependencies": {
+    "@types/node": "*",
+    "@types/qs": "*",
+    "openapi-types": "*",
+    "ts-node": "*",
+    "typescript": "*"
+  }
+}

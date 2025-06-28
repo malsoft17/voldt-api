@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>404 - Page Not Found</title>
+  <style>
+    :root {
+      --accent: #6366f1;
+      --bg: #0f172a;
+      --text: #e2e8f0;
+      --muted: #94a3b8;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Inter', sans-serif;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      overflow: hidden;
+      flex-direction: column;
+      position: relative;
+      animation: fadeIn 1s ease-out;
+    }
+
+    .background-blobs {
+      position: absolute;
+      top: -50px;
+      left: -50px;
+      width: 200%;
+      height: 200%;
+      z-index: -1;
+      overflow: hidden;
+      filter: blur(80px);
+    }
+
+    .blob {
+      position: absolute;
+      border-radius: 50%;
+      opacity: 0.6;
+      animation: float 10s ease-in-out infinite alternate;
+    }
+
+    .blob:nth-child(1) {
+      width: 400px;
+      height: 400px;
+      background: #6366f1;
+      top: 10%;
+      left: 15%;
+    }
+
+    .blob:nth-child(2) {
+      width: 300px;
+      height: 300px;
+      background: #3b82f6;
+      top: 40%;
+      left: 60%;
+      animation-delay: 2s;
+    }
+
+    .blob:nth-child(3) {
+      width: 500px;
+      height: 500px;
+      background: #8b5cf6;
+      top: 70%;
+      left: 30%;
+      animation-delay: 4s;
+    }
+
+    @keyframes float {
+      0% { transform: translateY(0px) scale(1); }
+      100% { transform: translateY(-60px) scale(1.1); }
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    h1 {
+      font-size: 8rem;
+      font-weight: 800;
+      letter-spacing: -0.05em;
+      color: var(--accent);
+      margin-bottom: 0.2em;
+      animation: fadeIn 1.2s ease-out forwards;
+    }
+
+    h2 {
+      font-size: 2rem;
+      color: var(--text);
+      margin-bottom: 1rem;
+      animation: fadeIn 1.5s ease-out forwards;
+    }
+
+    p {
+      max-width: 400px;
+      text-align: center;
+      color: var(--muted);
+      margin-bottom: 2rem;
+      animation: fadeIn 1.8s ease-out forwards;
+    }
+
+    a {
+      padding: 0.75rem 1.5rem;
+      background: var(--accent);
+      color: white;
+      text-decoration: none;
+      font-weight: 600;
+      border-radius: 999px;
+      transition: background 0.3s ease;
+      animation: fadeIn 2s ease-out forwards;
+    }
+
+    a:hover {
+      background: #4f46e5;
+    }
+
+    @media (max-width: 600px) {
+      h1 {
+        font-size: 5rem;
+      }
+      h2 {
+        font-size: 1.5rem;
+      }
+      p {
+        padding: 0 1rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="background-blobs">
+    <div class="blob"></div>
+    <div class="blob"></div>
+    <div class="blob"></div>
+  </div>
+
+  <h1>404</h1>
+  <h2>Whoa, you're here?</h2>
+  <p>We couldn’t find the page you were looking for. Maybe it got moved or never existed.</p>
+  <a href="/">Back to Home</a>
+</body>
+</html>
