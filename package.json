@@ -1,6 +1,6 @@
 {
-  "name": "myswagger",
-  "version": "1.0.0",
+  "name": "karst-api",
+  "version": "0.0.1",
   "scripts": {
     "dev": "npx ts-node src/dev",
     "build": "npx tsc"
