@@ -91,12 +91,12 @@ async function aiVoiceGenerator(text: string, language = 'en-US') {
       }
     });
     return {
-      ok: true,
+      success: true,
       result: data.tts_uri
     };
   } catch (e: any) {
     return {
-      ok: false,
+      success: false,
       message: e.response?.data?.error || e.message
     }
   }

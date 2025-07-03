@@ -144,18 +144,18 @@ async function artingAi(prompt: string, model_id: string, negative_prompt: strin
         }
       });
       if(response2.data.data.output.length) return {
-        ok: true,
+        success: true,
         result: response2.data.data.output[0]
       }
     }
     
     return {
-      ok: false,
+      success: false,
       result: 'Timeout has been reached'
     }
   } catch (e: any) {
     return {
-      ok: false,
+      success: false,
       message: e.response?.data?.error || e.message
     }
   }

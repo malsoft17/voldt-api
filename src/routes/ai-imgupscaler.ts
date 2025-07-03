@@ -12,24 +12,24 @@ const register = (fastify: FastifyInstance) => {
     const { ratio } = req.query as { ratio: string };
 
     if(!file) return reply.code(400).send({
-      ok: false,
+      success: false,
       message: 'No file uploaded'
     });
 
     if(file.fieldname !== 'image') return reply.code(400).send({
-      ok: false,
+      success: false,
       message: `Expected field 'image', got '${file.fieldname}'`
     });
 
     if(!file.mimetype.startsWith('image/') || file.mimetype === 'image/gif') return reply.code(400).send({
-      ok: false,
+      success: false,
       message: `Uploaded file must be an image, received type '${file.mimetype}'`
     });
 
     const buffer = await file.toBuffer();
     const data = await imageUpscaler(buffer, ratio);
 
-    if(!data.ok) return reply.code(500).send(data);
+    if(!data.success) return reply.code(500).send(data);
     const { data: imageBuffer } = await axios.get(data.result.downloadUrls[0], {
       responseType: 'arraybuffer'
     });
@@ -121,12 +121,12 @@ async function imageUpscaler(buffer: Buffer, ratio = '200%') {
       await new Promise(r => setTimeout(r, 1000));
     }
     return {
-      ok: true,
+      success: true,
       result: finalData.data
     }
   } catch (e: any) {
     return {
-      ok: false,
+      success: false,
       message: e.response?.data?.error || e.message
     };
   }

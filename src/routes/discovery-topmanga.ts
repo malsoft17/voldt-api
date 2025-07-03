@@ -25,8 +25,13 @@ const docs: OpenAPIV3.PathsObject = {
               schema: {
                 type: 'object',
                 properties: {
-                  ok: { type: 'boolean' },
-                  result: { type: 'object' }
+                  success: { type: 'boolean' },
+                  result: {
+                    type: 'array',
+                    items: {
+                      type: 'object'
+                    }
+                  }
                 }
               }
             }
@@ -55,12 +60,12 @@ async function topManga() {
       res.push({ rank: i + 1, title, rating, link });
     });
     return {
-      ok: true,
+      success: true,
       result: res
     };
   } catch (e: any) {
     return {
-      ok: false,
+      success: false,
       message: e.response?.data?.error || e.message
     }
   }

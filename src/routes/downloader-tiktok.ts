@@ -37,8 +37,13 @@ const docs: OpenAPIV3.PathsObject = {
               schema: {
                 type: 'object',
                 properties: {
-                  ok: { type: 'boolean' },
-                  result: { type: 'object' }
+                  success: { type: 'boolean' },
+                  result: {
+                    type: 'array',
+                    items: {
+                      type: 'object'
+                    }
+                  }
                 }
               }
             }
@@ -96,7 +101,7 @@ async function ssstik(url: string) {
 
         if (linkmp4) {
           return {
-            ok: true,
+            success: true,
             type: 'video',
             result: {
               linkmp4: linkmp4 || 'Unknown',
@@ -113,7 +118,7 @@ async function ssstik(url: string) {
 
         if (result.length > 0) {
           return {
-            ok: true,
+            success: true,
             type: 'image',
             result
           };
@@ -127,12 +132,12 @@ async function ssstik(url: string) {
     }
 
     return {
-      ok: false,
+      success: false,
       message: 'Failed to fetch data after 10 attempts.'
     };
   } catch (e: any) {
     return {
-      ok: false,
+      success: false,
       message: e.response?.data?.error || e.response?.data || e.message || e
     };
   }

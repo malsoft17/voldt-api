@@ -10,7 +10,7 @@ const defaultResponses = {
         schema: {
           type: 'object',
           properties: {
-            ok: { default: false },
+            success: { default: false },
             message: { default: 'An error occured' },
           },
         },
@@ -24,7 +24,7 @@ const defaultResponses = {
         schema: {
           type: 'object',
           properties: {
-            ok: { default: false },
+            success: { default: false },
             message: { default: 'An error occured' },
           },
         },

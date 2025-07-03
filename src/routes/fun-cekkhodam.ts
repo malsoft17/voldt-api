@@ -36,7 +36,7 @@ const docs: OpenAPIV3.PathsObject = {
               schema: {
                 type: 'object',
                 properties: {
-                  ok: { type: 'boolean' },
+                  success: { type: 'boolean' },
                   result: { type: 'string' }
                 }
               }
@@ -61,12 +61,12 @@ async function cekKhodam(name: string) {
     const $ = cheerio.load(data);
     const res = $('.result p').last().text().trim().replace(/✨/g, '');
     return {
-      ok: true,
+      success: true,
       result: res
     }
   } catch (e: any) {
     return {
-      ok: false,
+      success: false,
       message: e.response?.data?.error || e.message
     }
   }

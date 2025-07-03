@@ -78,17 +78,17 @@ async function hf_txt2img(prompt: string) {
       const { data } = await axios.get('https://m-ric-text-to-image.hf.space/queue/data?session_hash=' + randomString);
       const result = data.match(/"url":"(.*?)"/)?.[1];
       res = {
-        ok: true,
+        success: true,
         result
       }
   
     } catch (e: any) {
       res = {
-        ok: false,
+        success: false,
         message: e.response?.data?.error || e.message
       }
     }
-    if(!res.ok) console.log('Retrying...');
-  } while(!res.ok);
+    if(!res.success) console.log('Retrying...');
+  } while(!res.success);
   return res;
 }

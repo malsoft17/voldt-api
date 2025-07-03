@@ -11,17 +11,17 @@ const register = (fastify: FastifyInstance) => {
     const file = await req.file();
 
     if(!file) return reply.code(400).send({
-      ok: false,
+      success: false,
       message: 'No file uploaded'
     });
 
     if(file.fieldname !== 'image') return reply.code(400).send({
-      ok: false,
+      success: false,
       message: `Expected field 'image', got '${file.fieldname}'`
     });
 
     if(!file.mimetype.startsWith('image/') || file.mimetype === 'image/gif') return reply.code(400).send({
-      ok: false,
+      success: false,
       message: `Uploaded file must be an image, received type '${file.mimetype}'`
     });
 
@@ -60,7 +60,7 @@ const docs: OpenAPIV3.PathsObject = {
               schema: {
                 type: 'object',
                 properties: {
-                  ok: { type: 'boolean' },
+                  success: { type: 'boolean' },
                   result: { type: 'string' }
                 }
               }
@@ -107,13 +107,13 @@ async function imgbb(buffer: Buffer) {
       }
     });
     return {
-      ok: true,
+      success: true,
       result: data.image.url
     }
   } catch (error: unknown) {
     const e = error as AxiosError<{ error: string }>;
     return {
-      ok: false,
+      success: false,
       message: e.response?.data?.error || e.message
     }
   }

@@ -37,7 +37,7 @@ const docs: OpenAPIV3.PathsObject = {
               schema: {
                 type: 'object',
                 properties: {
-                  ok: { type: 'boolean' },
+                  success: { type: 'boolean' },
                   result: { type: 'object' }
                 }
               }
@@ -87,7 +87,7 @@ async function malSearch(query: string) {
           anime = data.categories[0].items[0];
         } else {
           return {
-            ok: false,
+            success: false,
             message: 'No anime found'
           }
         }
@@ -108,7 +108,7 @@ async function malSearch(query: string) {
     const url = anime.url;
     const synopsis = $('p[itemprop="description"]').text().replace('\n\n[Written by MAL Rewrite]', '');
     return {
-      ok: true,
+      success: true,
       result: {
         title,
         thumbnail,
@@ -125,7 +125,7 @@ async function malSearch(query: string) {
     }
   } catch(e: any) {
     return {
-      ok: false,
+      success: false,
       message: e.response?.data?.error || e.message
     }
   }

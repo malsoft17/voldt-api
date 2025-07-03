@@ -24,7 +24,7 @@ const docs: OpenAPIV3.PathsObject = {
               schema: {
                 type: 'object',
                 properties: {
-                  ok: { type: 'boolean' },
+                  success: { type: 'boolean' },
                   result: { type: 'object' }
                 }
               }
@@ -51,18 +51,18 @@ async function lahelu() {
     const postInfos = data.postInfos || [];
 
     if (postInfos.length === 0) {
-      return { ok: false, message: 'No recommendations found.' };
+      return { success: false, message: 'No recommendations found.' };
     }
 
     const randomIndex = Math.floor(Math.random() * postInfos.length);
     const res = postInfos[randomIndex];
 
     if (!res) {
-      return { ok: false, message: 'No post found at selected index.' };
+      return { success: false, message: 'No post found at selected index.' };
     }
 
     return {
-      ok: true,
+      success: true,
       result: {
         title: res.title || '',
         media: res.media || ''
@@ -70,7 +70,7 @@ async function lahelu() {
     };
   } catch (e: any) {
     return {
-      ok: false,
+      success: false,
       message: e.response?.data?.error || e.message
     };
   }

@@ -25,7 +25,7 @@ const docs: OpenAPIV3.PathsObject = {
               schema: {
                 type: 'object',
                 properties: {
-                  ok: { type: 'boolean' },
+                  success: { type: 'boolean' },
                   result: { type: 'string' }
                 }
               }
@@ -68,12 +68,12 @@ async function openAI(prompt: string) {
     const { data } = await axios.post(url, `{"messages":[{"role":"user","content":"${prompt}"}]}`, { headers });
   
     return {
-      ok: true,
+      success: true,
       result: data.choices[0].message.content
     }
   } catch (e: any) {
     return {
-      ok: false,
+      success: false,
       message: e.response?.data?.error || e.message
     }
   }

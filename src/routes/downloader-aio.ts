@@ -36,7 +36,7 @@ const docs: OpenAPIV3.PathsObject = {
               schema: {
                 type: 'object',
                 properties: {
-                  ok: { type: 'boolean' },
+                  success: { type: 'boolean' },
                   result: { type: 'object' }
                 }
               }
@@ -73,7 +73,7 @@ async function squidlr(url: string) {
     const duration = $('.card-text li.list-inline-item').eq(0).text().trim();
     const link = $('.list-group a').attr('href');
     return {
-      ok: true,
+      success: true,
       result: {
         title: title || 'Unknown',
         author: author || 'Unknown',
@@ -86,7 +86,7 @@ async function squidlr(url: string) {
     }
   } catch (e: any) {
     return {
-      ok: false,
+      success: false,
       message: e.response?.data?.error || e.response?.data || e.message || e
     }
   }

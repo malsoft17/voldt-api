@@ -37,7 +37,7 @@ const docs: OpenAPIV3.PathsObject = {
               schema: {
                 type: 'object',
                 properties: {
-                  ok: { type: 'boolean' },
+                  success: { type: 'boolean' },
                   result: { type: 'object' }
                 }
               }
@@ -85,7 +85,7 @@ async function kolIg(url: string) {
     const title = $2('.small-title').text().trim();
     const link = $2('a.btn-instagram').attr('href');
     return {
-      ok: true,
+      success: true,
       result: {
         title: title || 'Unknown',
         link: link || 'Unknown'
@@ -93,7 +93,7 @@ async function kolIg(url: string) {
     }
   } catch (e: any) {
     return {
-      ok: false,
+      success: false,
       message: e.response?.data?.error || e.message
     }
   }

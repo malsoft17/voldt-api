@@ -9,24 +9,24 @@ const register = (fastify: FastifyInstance) => {
     const file = await req.file();
 
     if(!file) return reply.code(400).send({
-      ok: false,
+      success: false,
       message: 'No file uploaded'
     });
 
     if(file.fieldname !== 'image') return reply.code(400).send({
-      ok: false,
+      success: false,
       message: `Expected field 'image', got '${file.fieldname}'`
     });
 
     if(!file.mimetype.startsWith('image/') || file.mimetype === 'image/gif') return reply.code(400).send({
-      ok: false,
+      success: false,
       message: `Uploaded file must be an image, received type '${file.mimetype}'`
     });
 
     const buffer = await file.toBuffer();
     const data = await blackSkin(buffer);
 
-    if(!data.ok) return reply.code(500).send(data);
+    if(!data.success) return reply.code(500).send(data);
     return reply.type('image/png').send(data.result);
   });
 }
@@ -75,7 +75,7 @@ export default {
   docs
 }
 
-async function blackSkin(buffer: Buffer, filter = 'hitam'): Promise<{ ok: true; result: Buffer } | { ok: false; message: string }> {
+async function blackSkin(buffer: Buffer, filter = 'hitam'): Promise<{ success: true; result: Buffer } | { success: false; message: string }> {
   try {
     const imageData = Buffer.from(buffer).toString('base64');
   
@@ -85,13 +85,13 @@ async function blackSkin(buffer: Buffer, filter = 'hitam'): Promise<{ ok: true; 
     const imageBuffer = Buffer.from(base64Image, 'base64');
     
     return {
-      ok: true,
+      success: true,
       result: imageBuffer
     }
   }
   catch(e: any) {
     return {
-      ok: false,
+      success: false,
       message: e.response?.data?.error || e.message
     }
   }

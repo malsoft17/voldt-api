@@ -35,7 +35,7 @@ const docs: OpenAPIV3.PathsObject = {
               schema: {
                 type: 'object',
                 properties: {
-                  ok: { type: 'boolean' },
+                  success: { type: 'boolean' },
                   result: { type: 'object' }
                 }
               }
@@ -68,12 +68,12 @@ async function clipToYt(url: string) {
     });
     const { success, ...rest } = data;
     return {
-      ok: true,
+      success: true,
       result: rest
     };
   } catch (e: any) {
     return {
-      ok: false,
+      success: false,
       message: e.response?.data?.error || e.message
     };
   }

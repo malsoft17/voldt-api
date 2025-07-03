@@ -43,7 +43,7 @@ const docs: OpenAPIV3.PathsObject = {
               schema: {
                 type: 'object',
                 properties: {
-                  ok: { type: 'boolean' },
+                  success: { type: 'boolean' },
                   result: { type: 'object' }
                 }
               }
@@ -93,7 +93,7 @@ async function yt1s(url: string, fileType = 'MP3') {
     }
     const data = response?.data;
     if(fileType === 'MP3') return {
-      ok: true,
+      success: true,
       result: {
         title: data.title,
         duration: data.duration,
@@ -102,7 +102,7 @@ async function yt1s(url: string, fileType = 'MP3') {
       }
     };
     if(fileType === 'MP4') return {
-      ok: true,
+      success: true,
       result: {
         title: data.title,
         duration: Number(data.formats[0].approxDurationMs) / 1000,
@@ -112,7 +112,7 @@ async function yt1s(url: string, fileType = 'MP3') {
     };
   } catch (e: any) {
     return {
-      ok: false,
+      success: false,
       message: e.response?.data?.error || e.message
     };
   }

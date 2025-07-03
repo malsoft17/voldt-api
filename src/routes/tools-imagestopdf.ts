@@ -12,12 +12,12 @@ const register = (fastify: FastifyInstance) => {
 
     for await(const part of parts) {
       if(part.type !== 'file' || part.fieldname !== 'images') return reply.code(400).send({
-        ok: false,
+        success: false,
         message: `Expected field 'image', got '${part.fieldname}'`
       });
   
       if(!part.mimetype.startsWith('image/') || part.mimetype === 'image/gif') return reply.code(400).send({
-        ok: false,
+        success: false,
         message: `Uploaded file must be an image, received type '${part.mimetype}'`
       });
 
@@ -26,7 +26,7 @@ const register = (fastify: FastifyInstance) => {
     }
 
     if(buffers.length === 0) return reply.send({
-      ok: false,
+      success: false,
       message: 'No images uploaded'
     });
 
@@ -67,7 +67,7 @@ const docs: OpenAPIV3.PathsObject = {
               schema: {
                 type: 'object',
                 properties: {
-                  ok: { type: 'boolean' },
+                  success: { type: 'boolean' },
                   result: { type: 'string' }
                 }
               }
@@ -113,12 +113,12 @@ async function imageToPdf(buffers: Buffer[]) {
     const response = await axios.post('https://filetools1.pdf24.org/client.php?action=imagesToPdf', form);
 
     return {
-      ok: true,
+      success: true,
       result: `https://filetools1.pdf24.org/client.php?mode=download&action=downloadJobResult&jobId=${response.data.jobId}`
     };
   } catch (e: any) {
     return {
-      ok: false,
+      success: false,
       message: e.response?.data?.error || e.message
     };
   }

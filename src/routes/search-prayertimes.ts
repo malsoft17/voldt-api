@@ -36,8 +36,13 @@ const docs: OpenAPIV3.PathsObject = {
               schema: {
                 type: 'object',
                 properties: {
-                  ok: { type: 'boolean' },
-                  result: { type: 'object' }
+                  success: { type: 'boolean' },
+                  result: {
+                    type: 'array',
+                    items: {
+                      type: 'object'
+                    }
+                  }
                 }
               }
             }
@@ -71,7 +76,7 @@ async function prayerTimes(city: string) {
       }
     });
     return {
-      ok: true,
+      success: true,
       result: {
         city: a[0].name,
         prayer_times: res
@@ -79,7 +84,7 @@ async function prayerTimes(city: string) {
     };
   } catch (e: any) {
     return {
-      ok: false,
+      success: false,
       message: e.response?.data?.error || e.message
     }
   }
