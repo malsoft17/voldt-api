@@ -3,7 +3,7 @@ import * as cheerio from 'cheerio';
 import { FastifyInstance } from 'fastify';
 import { OpenAPIV3 } from 'openapi-types';
 
-const path = '/api/search/jadwalsholat';
+const path = '/api/search/prayertimes';
 
 const register = (fastify: FastifyInstance) => {
   fastify.get(path, async(req, reply) => {
@@ -70,9 +70,9 @@ async function prayerTimes(city: string) {
     $('.praytime-item').each((_, el) => {
       const element = $(el);
       if (!element.hasClass('hidden')) {
-          const nama = element.find('p').first().text().trim();
-          const waktu = element.find('.schedule-time').text().trim();
-          res.push({ nama, waktu });
+          const name = element.find('p').first().text().trim();
+          const time = element.find('.schedule-time').text().trim();
+          res.push({ name, time });
       }
     });
     return {
