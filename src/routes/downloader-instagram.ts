@@ -9,7 +9,7 @@ const path = '/api/downloader/instagram';
 const register = (fastify: FastifyInstance) => {
   fastify.get(path, async(req, reply) => {
     const { url } = req.query as { url: string };
-    const data = await kolIg(url);
+    const data = await theSosialCatIg(url);
     return reply.send(data);
   });
 };
@@ -38,6 +38,7 @@ const docs: OpenAPIV3.PathsObject = {
                 type: 'object',
                 properties: {
                   success: { type: 'boolean' },
+                  type: { type: 'string' },
                   result: { type: 'object' }
                 }
               }
@@ -55,41 +56,19 @@ export default {
   docs
 }
 
-async function kolIg(url: string) {
+async function theSosialCatIg(url: string) {
   try {
     if(!url) throw new Error('Parameter url is required');
-    const html = await axios.get('https://kol.id/download-video/instagram', {
-      headers: {
-        'user-agent': 'Mozilla/5.0 (Linux; Android 10; K) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/132.0.0.0 Mobile Safari/537.36'
-      }
-    });
-    const $ = cheerio.load(html.data);
-    const token = $('input[name=_token]').attr('value');
-    const cookie = (html.headers['set-cookie'] as string[]).map(v => v.split(';')[0]).join('; ');
-    
-    const form = qs.stringify({
-      url: url,
-      _token: token
-    });
-    
-    const response = await axios.post('https://kol.id/download-video/instagram', form, {
-      headers: {
-        'content-type': 'application/x-www-form-urlencoded; charset=UTF-8',
-        'cookie': cookie,
-        'origin': 'https://kol.id',
-        'referer': 'https://kol.id/download-video/instagram',
-        'user-agent': 'Mozilla/5.0 (Linux; Android 10; K) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/132.0.0.0 Mobile Safari/537.36'
-      }
-    });
-    const $2 = cheerio.load(response.data.html);
-    const title = $2('.small-title').text().trim();
-    const link = $2('a.btn-instagram').attr('href');
+
+    const payload = {
+      url
+    };
+    const { data } = await axios.post('https://thesocialcat.com/api/instagram-download', payload);
+    const { type, ...rest } = data;
     return {
       success: true,
-      result: {
-        title: title || 'Unknown',
-        link: link || 'Unknown'
-      }
+      type,
+      result: rest
     }
   } catch (e: any) {
     return {
