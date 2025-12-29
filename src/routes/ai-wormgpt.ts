@@ -28,7 +28,7 @@ const register = (fastify: FastifyInstance) => {
 const docs: OpenAPIV3.PathsObject = {
   [path]: {
     get: {
-      summary: 'OpenAI from prompt',
+      summary: 'WormGPT from prompt',
       tags: ['AI'],
       responses: {
         200: {
@@ -67,12 +67,12 @@ export default {
 }
 
 const wormGpt = {
-    api: { 
-        base: "http://145.79.11.101:5000", 
-        endpoint: { 
-            chat: "/api/chat"
-         }
-       },
+  api: { 
+    base: "http://145.79.11.101:5000", 
+    endpoint: { 
+      chat: "/api/chat"
+    }
+  },
 
   headers: {
     "user-agent": "NB Android/1.0.0",
