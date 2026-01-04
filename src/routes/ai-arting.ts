@@ -31,7 +31,7 @@ const docs: OpenAPIV3.PathsObject = {
         {
           name: 'model_id',
           in: 'query',
-          required: false,
+          required: true,
           schema: {
             type: 'string',
             enum: [
