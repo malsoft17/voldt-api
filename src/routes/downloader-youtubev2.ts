@@ -29,9 +29,14 @@ const docs: OpenAPIV3.PathsObject = {
         {
           name: 'file_type',
           in: 'query',
-          required: false,
+          required: true,
           schema: {
-            type: 'string'
+            type: 'string',
+            enum: [
+              'MP3',
+              'MP4'
+            ],
+            default: 'MP3'
           }
         }
       ],
