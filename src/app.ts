@@ -4,9 +4,17 @@ import fastifyStatic from '@fastify/static';
 import fastifyMultipart from '@fastify/multipart';
 import { loadRoutes } from './lib/loadRoutes';
 
-const fastify: FastifyInstance = Fastify({ logger: true });
+const fastify: FastifyInstance = Fastify({
+  logger: true,
+  bodyLimit: 100 * 1024 * 1024
+});
 
-fastify.register(fastifyMultipart);
+fastify.register(fastifyMultipart, {
+  limits: {
+    fileSize: 100 * 1024 * 1024
+  }
+});
+
 fastify.register(fastifyStatic, {
   root: path.join(process.cwd(), 'public'),
   prefix: '/'
