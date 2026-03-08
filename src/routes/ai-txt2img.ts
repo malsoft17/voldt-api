@@ -7,9 +7,33 @@ const path = '/api/ai/txt2img';
 const register = (fastify: FastifyInstance) => {
   fastify.get(path, async(req, reply) => {
     const { prompt } = req.query as { prompt: string };
-    const data = await hf_txt2img(prompt);
-    const imgResponse = await axios.get(data?.result, { responseType: 'arraybuffer' });
-    return reply.type('image/png').send(imgResponse.data);
+    const data = await txt2img(prompt);
+
+    if (!data || !data.result) {
+      return reply.send({
+        success: false,
+        message: 'Failed while generating image'
+      });
+    }
+
+    const res = await axios.get(data.result, {
+      responseType: 'arraybuffer',
+      headers: {
+        'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 Chrome/120 Safari/537.36'
+      }
+     });
+
+    const contentType = res.headers['content-type'];
+    if (!contentType) {
+      return reply.send({
+        success: false,
+        message: 'Invalid image response'
+      });
+    }
+
+    return reply
+      .type(contentType)
+      .send(res.data);
   });
 }
 
@@ -51,44 +75,95 @@ export default {
   docs
 }
 
-function generateRandomString(length: number): string {
-  const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
-  let result = '';
-  for (let i = 0; i < length; i++) {
-      result += characters.charAt(Math.floor(Math.random() * characters.length));
-  }
-  return result;
-}
+async function txt2img(prompt: string) {
+  try {
+    if(!prompt) throw new Error('Parameter prompt is required');
 
-async function hf_txt2img(prompt: string) {
-  const randomString = generateRandomString(5);
-  let attempts = 0;
-  let res;
-  do {
-    if(attempts > 5) break;
-    attempts++;
-    try {
-      const { data: data1 } = await axios.post('https://m-ric-text-to-image.hf.space/queue/join?__theme=light', {
-        data: [prompt],
-        event_data: null,
-        fn_index: 0,
-        trigger_id: 10,
-        session_hash: randomString
-      });
-      const { data } = await axios.get('https://m-ric-text-to-image.hf.space/queue/data?session_hash=' + randomString);
-      const result = data.match(/"url":"(.*?)"/)?.[1];
-      res = {
-        success: true,
-        result
+    const token = (await axios.get('https://api.nexray.web.id/tools/bypass/cf-turnstile?url=https%3A%2F%2Fimage-generation.perchance.org%2Fembed&siteKey=0x4AAAAAAAA8g8NphwaSOT59', {
+      headers: {
+        'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 Chrome/120 Safari/537.36'
       }
-  
-    } catch (e: any) {
-      res = {
-        success: false,
-        message: e.response?.data?.error || e.message
+    })).data.result;
+
+    let userKey;
+    let attempts = 0;
+    const maxAttempts = 10;
+
+    while (!userKey && attempts < maxAttempts) {
+      attempts++;
+
+      try {
+        const res = await axios.get(
+          `https://image-generation.perchance.org/api/verifyUser?token=${token}&thread=0&__cacheBust=${Math.random()}`,
+          {
+            headers: {
+              'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 Chrome/120 Safari/537.36'
+            }
+          }
+        );
+
+        userKey = res.data.userKey;
+
+        if (!userKey) {
+          const fallback = await axios.get(
+            `https://image-generation.perchance.org/api/verifyUser?thread=0&__cacheBust=${Math.random()}`,
+            {
+              headers: {
+                'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 Chrome/120 Safari/537.36'
+              }
+            }
+          );
+
+          userKey = fallback.data.userKey;
+        }
+
+      } catch (err) {
+        console.error(`Attempt ${attempts} failed`);
       }
     }
-    if(!res.success) console.log('Retrying...');
-  } while(!res.success);
-  return res;
+
+    if (!userKey) {
+      throw new Error('Failed to get userKey after 10 attempts');
+    }
+
+    const adAccessCode = (await axios.get('https://perchance.org/api/getAccessCodeForAdPoweredStuff', {
+      responseType: 'text',
+      headers: {
+        'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 Chrome/120 Safari/537.36'
+      }
+    })).data;
+
+    const requestId = Math.random();
+
+    const body = {
+      prompt: `A casual photo. A casual photo of ${prompt}. It's a casual photo.`,
+      negativePrompt: '',
+      seed: -1,
+      resolution: '768x768',
+      guidanceScale: 7,
+      channel: 'ai-text-to-image-generator',
+      subChannel: 'public',
+      userKey: userKey,
+      adAccessCode: adAccessCode,
+      requestId: requestId
+    };
+    
+    const imageId = (await axios.post(`https://image-generation.perchance.org/api/generate?userKey=${userKey}&adAccessCode=${adAccessCode}&requestId=${requestId}&__cacheBust=${Math.random()}`, body, {
+      headers: {
+        'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 Chrome/120 Safari/537.36'
+      }
+    })).data.imageId;
+
+    if(!imageId) throw new Error('Failed while generating image');
+
+    return {
+      success: true,
+      result: `https://image-generation.perchance.org/api/downloadTemporaryImage?imageId=${imageId}`
+    };
+  } catch (e: any) {
+    return {
+      success: false,
+      message: e.response?.data || e.message
+    };
+  }
 }
