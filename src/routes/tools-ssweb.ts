@@ -59,23 +59,23 @@ async function pikwy(url: string) {
 
     const res = await axios.get(`https://api.pikwy.com/?tkn=125&d=3000&u=${url}&fs=0&w=1920&h=1080&s=100&z=100&f=jpg&rt=jweb`);
     if(!res) return {
-      ok: false,
+      success: false,
       message: 'No response from server'
     }
 
     const data = res.data;
     if(!data || !data.durl) return {
-      ok: false,
+      success: false,
       message: 'Data not found'
     }
 
     return {
-      ok: true,
+      success: true,
       result: data.durl
     }
   } catch (e: any) {
     return {
-      ok: false,
+      success: false,
       message: e.response?.data?.error || e.message
     }
   }
