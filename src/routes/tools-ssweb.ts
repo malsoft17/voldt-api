@@ -7,8 +7,13 @@ const path = '/api/tools/ssweb';
 const register = (fastify: FastifyInstance) => {
   fastify.get(path, async(req, reply) => {
     const { url } = req.query as { url: string };
-    const data = await pikwy(url);
-    return reply.send(data);
+    const { fullSize } = req.query as { fullSize: string };
+    const data = await pikwy(url, fullSize);
+
+    const { data: imageBuffer } = await axios.get(data.result, {
+      responseType: 'arraybuffer'
+    })
+    return reply.type('image/jpeg').send(imageBuffer);
   });
 };
 
@@ -25,19 +30,29 @@ const docs: OpenAPIV3.PathsObject = {
           schema: {
             type: 'string'
           }
+        },
+        {
+          name: 'fullSize',
+          in: 'query',
+          required: true,
+          schema: {
+            type: 'string',
+            enum: [
+              'true',
+              'false'
+            ],
+            default: 'false'
+          }
         }
       ],
       responses: {
         200: {
           description: 'OK',
           content: {
-            'application/json': {
+            'image/jpeg': {
               schema: {
-                type: 'object',
-                properties: {
-                  success: { type: 'boolean' },
-                  result: { type: 'string' }
-                }
+                type: 'string',
+                format: 'binary'
               }
             }
           }
@@ -53,11 +68,19 @@ export default {
   docs
 }
 
-async function pikwy(url: string) {
+async function pikwy(url: string, fullSize: string) {
   try {
     if(!url) throw new Error('Parameter url is required');
+    if(!fullSize) throw new Error('Parameter fullSize is required');
 
-    const res = await axios.get(`https://api.pikwy.com/?tkn=125&d=3000&u=${url}&fs=0&w=1920&h=1080&s=100&z=100&f=jpg&rt=jweb`);
+    let fs;
+    if(fullSize === 'true') {
+      fs = 1;
+    } else if(fullSize === 'false') {
+      fs = 0;
+    }
+
+    const res = await axios.get(`https://api.pikwy.com/?tkn=125&d=3000&u=${url}&fs=${fs}&w=1920&h=1080&s=100&z=100&f=jpg&rt=jweb`);
     if(!res) return {
       success: false,
       message: 'No response from server'
