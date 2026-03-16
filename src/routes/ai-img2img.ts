@@ -34,7 +34,7 @@ const register = (fastify: FastifyInstance) => {
       responseType: 'arraybuffer'
     });
 
-    return reply.type('image/jpeg').send(imageBuffer);
+    return reply.type('image/png').send(imageBuffer);
   });
 }
 
@@ -74,7 +74,7 @@ const docs: OpenAPIV3.PathsObject = {
         200: {
           description: 'OK',
           content: {
-            'image/jpeg': {
+            'image/png': {
               schema: {
                 type: 'string',
                 format: 'binary'
