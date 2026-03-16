@@ -1,5 +1,6 @@
 import axios from 'axios';
 import crypto from 'crypto';
+import file_type from 'file-type';
 import { FastifyInstance } from 'fastify';
 import { OpenAPIV3 } from 'openapi-types';
 
@@ -259,11 +260,16 @@ async function img2img(prompt: string, imageBuffer: Buffer) {
     
     const imageId = generateImageId(imageBuffer);
     const date = new Date().toUTCString();
-    const resource = `/nc-cdn/notegpt/web3in1/${imageId}.jpg`;
+
+    const fileType = await file_type.fromBuffer(imageBuffer);
+    const ext = fileType?.ext || 'png';
+    const mime = fileType?.mime || 'image/png';
+
+    const resource = `/nc-cdn/notegpt/web3in1/${imageId}.${ext}`;
 
     const auth = buildOssAuth({
       method: 'PUT',
-      contentType: 'image/jpeg',
+      contentType: mime,
       date,
       resource,
       securityToken: deEncData.SecurityToken,
@@ -271,11 +277,11 @@ async function img2img(prompt: string, imageBuffer: Buffer) {
       accessKeySecret: deEncData.AccessKeySecret
     });
     
-    const uploadRes = await axios.put(`https://nc-cdn.oss-us-west-1.aliyuncs.com/notegpt/web3in1/${imageId}.jpg`,
+    const uploadRes = await axios.put(`https://nc-cdn.oss-us-west-1.aliyuncs.com/notegpt/web3in1/${imageId}.${ext}`,
       imageBuffer,
     {
       headers: {
-        'Content-Type': 'image/jpeg',
+        'Content-Type': mime,
         'x-oss-date': date,
         'X-Oss-Security-Token': deEncData.SecurityToken,
         'Authorization': auth,
@@ -283,7 +289,7 @@ async function img2img(prompt: string, imageBuffer: Buffer) {
     });
 
     let imageUrl;
-    if (uploadRes.status === 200) imageUrl = `https://nc-cdn.oss-us-west-1.aliyuncs.com/notegpt/web3in1/${imageId}.jpg`;
+    if (uploadRes.status === 200) imageUrl = `https://nc-cdn.oss-us-west-1.aliyuncs.com/notegpt/web3in1/${imageId}.${ext}`;
     else throw new Error('Could not upload image');
     
     const payload = {
@@ -348,6 +354,6 @@ async function img2img(prompt: string, imageBuffer: Buffer) {
     return {
       success: false,
       message: e.response?.data || e.message
-    };
+    }
   }
 }
