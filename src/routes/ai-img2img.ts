@@ -9,7 +9,6 @@ const path = '/api/ai/img2img';
 const register = (fastify: FastifyInstance) => {
   fastify.post(path, async(req, reply) => {
     const file = await req.file();
-    const { prompt } = req.query as { prompt: string };
 
     if(!file) return reply.code(400).send({
       success: false,
@@ -21,6 +20,14 @@ const register = (fastify: FastifyInstance) => {
       message: `Expected field 'image', got '${file.fieldname}'`
     });
 
+    const fields = file.fields as { prompt?: { value: string } };
+    const prompt = fields?.prompt?.value;
+
+    if(!prompt) return reply.code(400).send({
+      success: false,
+      message: 'Prompt is required'
+    });
+
     if(!file.mimetype.startsWith('image/') || file.mimetype === 'image/gif') return reply.code(400).send({
       success: false,
       message: `Uploaded file must be an image, received type '${file.mimetype}'`
@@ -30,6 +37,7 @@ const register = (fastify: FastifyInstance) => {
     const data = await img2img(prompt, buffer);
 
     if(!data.success && !data.result) return reply.code(500).send(data);
+
     const { data: imageBuffer } = await axios.get(data.result, {
       responseType: 'arraybuffer'
     });
@@ -43,16 +51,6 @@ const docs: OpenAPIV3.PathsObject = {
     post: {
       summary: 'Edit an image based on prompt',
       tags: ['AI'],
-      parameters: [
-        {
-          name: 'prompt',
-          in: 'query',
-          required: true,
-          schema: {
-            type: 'string'
-          }
-        }
-      ],
       requestBody: {
         required: true,
         content: {
@@ -63,9 +61,13 @@ const docs: OpenAPIV3.PathsObject = {
                 image: {
                   type: 'string',
                   format: 'binary'
+                },
+                prompt: {
+                  type: 'string',
+                  default: ''
                 }
               },
-              required: ['image']
+              required: ['image', 'prompt']
             }
           }
         }
