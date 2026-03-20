@@ -2,13 +2,21 @@ import axios from 'axios';
 import crypto from 'crypto';
 import file_type from 'file-type';
 import { FastifyInstance } from 'fastify';
+import { MultipartFile } from '@fastify/multipart';
 import { OpenAPIV3 } from 'openapi-types';
 
 const path = '/api/ai/img2img';
 
 const register = (fastify: FastifyInstance) => {
-  fastify.post(path, async(req, reply) => {
-    const file = await req.file();
+  fastify.post<{
+    Body: {
+      image: MultipartFile;
+      prompt?: { value: string };
+    }
+  }>(path, async(req, reply) => {
+    const body = req.body;
+    const file = body.image;
+    const prompt = body.prompt?.value;
 
     if(!file) return reply.code(400).send({
       success: false,
@@ -20,12 +28,9 @@ const register = (fastify: FastifyInstance) => {
       message: `Expected field 'image', got '${file.fieldname}'`
     });
 
-    const fields = file.fields as { prompt?: { value: string } };
-    const prompt = fields?.prompt?.value;
-
     if(!prompt) return reply.code(400).send({
       success: false,
-      message: 'Prompt is required'
+      message: 'Parameter prompt is required'
     });
 
     if(!file.mimetype.startsWith('image/') || file.mimetype === 'image/gif') return reply.code(400).send({

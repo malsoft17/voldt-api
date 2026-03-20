@@ -12,7 +12,8 @@ const fastify: FastifyInstance = Fastify({
 fastify.register(fastifyMultipart, {
   limits: {
     fileSize: 100 * 1024 * 1024
-  }
+  },
+  attachFieldsToBody: true
 });
 
 fastify.register(fastifyStatic, {

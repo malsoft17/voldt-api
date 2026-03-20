@@ -2,13 +2,15 @@ import axios from 'axios';
 import crypto from 'crypto';
 import file_type from 'file-type';
 import { FastifyInstance } from 'fastify';
+import { MultipartFile } from '@fastify/multipart';
 import { OpenAPIV3 } from 'openapi-types';
 
 const path = '/api/ai/removebg';
 
 const register = (fastify: FastifyInstance) => {
-  fastify.post(path, async(req, reply) => {
-    const file = await req.file();
+  fastify.post<{ Body: { image: MultipartFile } }>(path, async(req, reply) => {
+    const body = req.body;
+    const file = body.image;
 
     if(!file) return reply.code(400).send({
       success: false,
@@ -53,8 +55,7 @@ const docs: OpenAPIV3.PathsObject = {
                   type: 'string',
                   format: 'binary'
                 }
-              },
-              required: ['image']
+              }
             }
           }
         }

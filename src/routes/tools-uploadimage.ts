@@ -1,14 +1,16 @@
 import axios, { AxiosError } from 'axios';
 import * as cheerio from 'cheerio';
 import { FastifyInstance } from 'fastify';
+import { MultipartFile } from '@fastify/multipart';
 import FormData from 'form-data';
 import { OpenAPIV3 } from 'openapi-types';
 
 const path = '/api/tools/uploadimage';
 
 const register = (fastify: FastifyInstance) => {
-  fastify.post(path, async(req, reply) => {
-    const file = await req.file();
+  fastify.post<{ Body: { image: MultipartFile } }>(path, async(req, reply) => {
+    const body = req.body;
+    const file = body.image;
 
     if(!file) return reply.code(400).send({
       success: false,

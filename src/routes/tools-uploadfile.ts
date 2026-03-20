@@ -1,4 +1,5 @@
 import { FastifyInstance } from 'fastify';
+import { MultipartFile } from '@fastify/multipart';
 import { OpenAPIV3 } from 'openapi-types';
 import axios from 'axios';
 import FormData from 'form-data';
@@ -6,8 +7,9 @@ import FormData from 'form-data';
 const path = '/api/tools/uploadfile';
 
 const register = (fastify: FastifyInstance) => {
-  fastify.post(path, async(req, reply) => {
-    const file = await req.file();
+  fastify.post<{ Body: { file: MultipartFile } }>(path, async(req, reply) => {
+    const body = req.body;
+    const file = body.file;
 
     if(!file) return reply.code(400).send({
       success: false,

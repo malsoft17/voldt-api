@@ -1,15 +1,16 @@
 import axios from 'axios';
 import FormData from 'form-data';
 import { FastifyInstance } from 'fastify';
+import { MultipartFile } from '@fastify/multipart';
 import { OpenAPIV3 } from 'openapi-types';
 import fileType from 'file-type';
 
 const path = '/api/ai/imgupscaler';
 
 const register = (fastify: FastifyInstance) => {
-  fastify.post(path, async(req, reply) => {
-    const file = await req.file();
-    const { ratio } = req.query as { ratio: string };
+  fastify.post<{ Body: { image: MultipartFile } }>(path, async(req, reply) => {
+    const body = req.body;
+    const file = body.image;
 
     if(!file) return reply.code(400).send({
       success: false,
@@ -27,7 +28,7 @@ const register = (fastify: FastifyInstance) => {
     });
 
     const buffer = await file.toBuffer();
-    const data = await imageUpscaler(buffer, ratio);
+    const data = await imageUpscaler(buffer);
 
     if(!data.success) return reply.code(500).send(data);
     const { data: imageBuffer } = await axios.get(data.result.downloadUrls[0], {
