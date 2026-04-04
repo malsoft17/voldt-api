@@ -1,6 +1,6 @@
 import axios from 'axios';
 import crypto from 'crypto';
-import file_type from 'file-type';
+import { fileTypeFromBuffer } from 'file-type';
 import { FastifyInstance } from 'fastify';
 import { MultipartFile } from '@fastify/multipart';
 import { OpenAPIV3 } from 'openapi-types';
@@ -250,7 +250,7 @@ async function removebg(imageBuffer: Buffer) {
     const imageId = generateImageId(imageBuffer);
     const date = new Date().toUTCString();
 
-    const fileType = await file_type.fromBuffer(imageBuffer);
+    const fileType = await fileTypeFromBuffer(imageBuffer);
     const ext = fileType?.ext || 'png';
     const mime = fileType?.mime || 'image/png';
 

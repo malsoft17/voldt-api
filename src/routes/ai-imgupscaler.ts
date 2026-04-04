@@ -3,7 +3,7 @@ import FormData from 'form-data';
 import { FastifyInstance } from 'fastify';
 import { MultipartFile } from '@fastify/multipart';
 import { OpenAPIV3 } from 'openapi-types';
-import fileType from 'file-type';
+import { fileTypeFromBuffer } from 'file-type';
 
 const path = '/api/ai/imgupscaler';
 
@@ -89,7 +89,7 @@ async function imageUpscaler(buffer: Buffer, ratio = '200%') {
     if(!ratio) throw new Error('Parameter "ratio" is required');
     const theRatio = Number(ratio.replace('%', '')) / 100;
 
-    const ext = ((await fileType.fromBuffer(buffer)) as Record<string, any>).ext;
+    const ext = ((await fileTypeFromBuffer(buffer)) as Record<string, any>).ext;
     const form = new FormData();
     form.append('myfile', buffer, `${Date.now()}.${ext}`);
     form.append('scaleRadio', theRatio);
