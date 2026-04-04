@@ -1,6 +1,11 @@
 import { FastifyInstance } from 'fastify';
 import fs from 'fs';
 import path from 'path';
+import { fileURLToPath } from 'url';
+import { dirname } from 'path';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
 
 const defaultResponses = {
   400: {
@@ -43,9 +48,9 @@ export const loadRoutes = (fastify?: FastifyInstance): Record<string, any> => {
   const routesPath = path.join(__dirname, '../routes');
   const paths: Record<string, any> = {};
 
-  fs.readdirSync(routesPath).forEach((file) => {
+  fs.readdirSync(routesPath).forEach(async(file) => {
     if (!file.endsWith('.ts') && !file.endsWith('.js')) return;
-    const mod = require(path.join(routesPath, file));
+    const mod = await import(path.join(routesPath, file));
     const route: RouteModule = mod.default;
 
     if (!route || typeof route !== 'object') {

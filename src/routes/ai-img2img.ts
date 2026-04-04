@@ -272,7 +272,16 @@ async function img2img(prompt: string, imageBuffer: Buffer) {
     const ext = fileType?.ext || 'png';
     const mime = fileType?.mime || 'image/png';
 
-    const resource = `/nc-cdn/notegpt/web3in1/${imageId}.${ext}`;
+    const now = new Date();
+
+    const yyyy = now.getUTCFullYear();
+    const mm = String(now.getUTCMonth() + 1).padStart(2, '0');
+    const dd = String(now.getUTCDate()).padStart(2, '0');
+
+    const bucket = 'nc-product-us-oss';
+    const objectKey = `tmp/upload/notegpt/image/${yyyy}/${mm}/${dd}/${imageId}.${ext}`;
+
+    const resource = `/${bucket}/${objectKey}`;
 
     const auth = buildOssAuth({
       method: 'PUT',
@@ -283,20 +292,24 @@ async function img2img(prompt: string, imageBuffer: Buffer) {
       accessKeyId: deEncData.AccessKeyId,
       accessKeySecret: deEncData.AccessKeySecret
     });
-    
-    const uploadRes = await axios.put(`https://nc-cdn.oss-us-west-1.aliyuncs.com/notegpt/web3in1/${imageId}.${ext}`,
+
+    const host = 'https://nc-product-us-oss.oss-us-west-1.aliyuncs.com';
+
+    const uploadRes = await axios.put(
+      `${host}/${objectKey}`,
       imageBuffer,
-    {
-      headers: {
-        'Content-Type': mime,
-        'x-oss-date': date,
-        'X-Oss-Security-Token': deEncData.SecurityToken,
-        'Authorization': auth,
+      {
+        headers: {
+          'Content-Type': mime,
+          'x-oss-date': date,
+          'x-oss-security-token': deEncData.SecurityToken, // ✅ FIX
+          'Authorization': auth,
+        }
       }
-    });
+    );
 
     let imageUrl;
-    if (uploadRes.status === 200) imageUrl = `https://nc-cdn.oss-us-west-1.aliyuncs.com/notegpt/web3in1/${imageId}.${ext}`;
+    if (uploadRes.status === 200) imageUrl = `https://cdn.ng-resource.com/tmp/upload/notegpt/image/${yyyy}/${mm}/${dd}/${imageId}.${ext}`;
     else throw new Error('Could not upload image');
     
     const payload = {

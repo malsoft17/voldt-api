@@ -2,12 +2,13 @@
   "name": "karst-api",
   "version": "0.0.1",
   "scripts": {
-    "dev": "npx ts-node src/dev",
-    "build": "npx tsc"
+    "dev": "tsx src/dev.ts",
+    "build": "tsc && tsc-esm-fix --dirnameVar=false --filenameVar=false"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
+  "type": "module",
   "description": "",
   "dependencies": {
     "@fastify/multipart": "*",
@@ -22,7 +23,8 @@
     "@types/node": "*",
     "@types/qs": "*",
     "openapi-types": "*",
-    "ts-node": "*",
+    "tsc-esm-fix": "*",
+    "tsx": "*",
     "typescript": "*"
   }
 }
