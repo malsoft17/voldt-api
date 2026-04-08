@@ -12,7 +12,12 @@ const register = (fastify: FastifyInstance) => {
     }
   }>(path, async(req, reply) => {
     const body = req.body;
-    const prompt = body.prompt?.value;
+    const rawPrompt = body.prompt;
+
+    const prompt =
+      typeof rawPrompt === 'string'
+        ? rawPrompt
+        : rawPrompt?.value;
 
     if(!prompt) return reply.code(400).send({
       success: false,
