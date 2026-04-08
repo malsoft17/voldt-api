@@ -158,12 +158,12 @@ async function gpt(prompt: string) {
     return {
       success: true,
       result
-    }
+    };
 
   } catch (e: any) {
     return {
       success: false,
       message: e.response?.data || e.message
-    }
+    };
   }
 }
