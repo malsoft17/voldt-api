@@ -174,11 +174,6 @@ async function txt2img(prompt: string) {
       }
     });
 
-    console.log({
-      res: res.data,
-      signature
-    });
-
     if (!res?.data?.data?.session_id) {
       throw new Error('Could not retrieve session ID');
     }
