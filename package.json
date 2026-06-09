@@ -1,0 +1,30 @@
+{
+  "name": "karst-api",
+  "version": "0.0.1",
+  "scripts": {
+    "dev": "tsx src/dev.ts",
+    "build": "tsc && tsc-esm-fix --dirnameVar=false --filenameVar=false"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "module",
+  "description": "",
+  "dependencies": {
+    "@fastify/multipart": "*",
+    "@fastify/static": "*",
+    "axios": "*",
+    "cheerio": "*",
+    "fastify": "*",
+    "file-type": "*",
+    "qs": "*"
+  },
+  "devDependencies": {
+    "@types/node": "*",
+    "@types/qs": "*",
+    "openapi-types": "*",
+    "tsc-esm-fix": "*",
+    "tsx": "*",
+    "typescript": "*"
+  }
+}
