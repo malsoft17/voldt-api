@@ -1,8 +1,6 @@
 import axios from 'axios';
-import * as cheerio from 'cheerio';
 import { FastifyInstance } from 'fastify';
 import { OpenAPIV3 } from 'openapi-types';
-import qs from 'qs';
 
 const path = '/api/downloader/instagram';
 
