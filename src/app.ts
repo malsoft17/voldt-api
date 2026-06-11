@@ -26,7 +26,7 @@ const paths = await loadRoutes(fastify);
 const swaggerSpec = {
   openapi: '3.0.0',
   info: {
-    title: 'Karst API',
+    title: 'Voldt API',
     version: '1.0.0',
   },
   paths,

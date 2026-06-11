@@ -1,5 +1,5 @@
 {
-  "name": "karst-api",
+  "name": "voldt-api",
   "version": "0.0.1",
   "scripts": {
     "dev": "tsx src/dev.ts",
