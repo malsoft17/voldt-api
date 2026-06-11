@@ -21,7 +21,7 @@ fastify.register(fastifyStatic, {
   prefix: '/'
 });
 
-const paths = loadRoutes(fastify);
+const paths = await loadRoutes(fastify);
 
 const swaggerSpec = {
   openapi: '3.0.0',

@@ -3,6 +3,7 @@ import { MultipartFile } from '@fastify/multipart';
 import { OpenAPIV3 } from 'openapi-types';
 import axios from 'axios';
 import FormData from 'form-data';
+import { fileTypeFromBuffer } from 'file-type';
 
 const path = '/api/tools/uploadfile';
 
@@ -81,23 +82,28 @@ async function catbox(buffer: Buffer) {
       message: 'Parameter must be a buffer'
     };
 
+    const fileType = await fileTypeFromBuffer(buffer);
+
     const formData = new FormData();
     formData.append('reqtype', 'fileupload');
     formData.append('fileToUpload', buffer, {
-      filename: Date.now() + '.bin'
+      filename: Date.now() + `.${fileType?.ext || 'bin'}`,
+      contentType: fileType?.mime || 'application/octet-stream'
     });
 
-    const res = await axios.post('https://catbox.moe/user/api.php', formData);
+    const res = await axios.post('https://catbox.moe/user/api.php', formData, {
+      headers: formData.getHeaders()
+    });
     const data = res.data;
 
     return {
       success: true,
-      result: data
+      result: data  
     };
   } catch (e: any) {
     return {
       success: false,
-      message: e.response?.data?.error || e.message
+      message: e.response?.data || e.message
     };
   }
 }

@@ -44,23 +44,19 @@ interface RouteModule {
   docs?: Record<string, any>;
 }
 
-export const loadRoutes = (fastify?: FastifyInstance): Record<string, any> => {
+export const loadRoutes = async(fastify?: FastifyInstance): Promise<Record<string, any>> => {
   const routesPath = path.join(__dirname, '../routes');
   const paths: Record<string, any> = {};
 
-  fs.readdirSync(routesPath).forEach(async(file) => {
-    if (!file.endsWith('.ts') && !file.endsWith('.js')) return;
+  const files = fs.readdirSync(routesPath);
+
+  for (const file of files) {
+    if (!file.endsWith('.ts') && !file.endsWith('.js')) continue;
+
     const mod = await import(path.join(routesPath, file));
     const route: RouteModule = mod.default;
 
-    if (!route || typeof route !== 'object') {
-      console.warn(`[loadRoutes] Skipped invalid route file: ${file}`);
-      return;
-    }
-
-    if (route.path && typeof route.register == 'function' && fastify) {
-      route.register(fastify);
-    }
+    if (route.path && typeof route.register === 'function' && fastify) route.register(fastify);
 
     if (route.docs) {
       for (const [routePath, methods] of Object.entries(route.docs)) {
@@ -79,7 +75,7 @@ export const loadRoutes = (fastify?: FastifyInstance): Record<string, any> => {
         }        
       }
     }
-  });
+  }
 
   return paths;
 };
