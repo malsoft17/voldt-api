@@ -16,7 +16,7 @@ Voldt API is designed for building scalable AI-powered services with a clean, ma
 ## 📦 Installation
 
 ```bash
-git clone https://github.com/<your-username>/voldt-api.git
+git clone https://github.com/malsoft17/voldt-api.git
 cd voldt-api
 npm install
 ```
