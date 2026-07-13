@@ -2,7 +2,7 @@ import Fastify, { FastifyInstance } from 'fastify';
 import path from 'path';
 import fastifyStatic from '@fastify/static';
 import fastifyMultipart from '@fastify/multipart';
-import { loadRoutes } from './lib/loadRoutes';
+import { loadRoutes } from './lib/loadRoutes.js';
 
 const fastify: FastifyInstance = Fastify({
   logger: true,

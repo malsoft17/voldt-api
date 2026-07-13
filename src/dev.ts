@@ -1,4 +1,4 @@
-import fastify from './app';
+import fastify from './app.js';
 
 const start = async () => {
   try {

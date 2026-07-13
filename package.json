@@ -1,9 +1,9 @@
 {
   "name": "voldt-api",
-  "version": "0.0.1",
+  "version": "1.0.0",
   "scripts": {
     "dev": "tsx src/dev.ts",
-    "build": "tsc && tsc-esm-fix --dirnameVar=false --filenameVar=false"
+    "build": "tsc"
   },
   "keywords": [],
   "author": "",
@@ -23,8 +23,7 @@
     "@types/node": "*",
     "@types/qs": "*",
     "openapi-types": "*",
-    "tsc-esm-fix": "*",
     "tsx": "*",
-    "typescript": "*"
+    "typescript": "5.8.3"
   }
 }
