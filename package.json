@@ -3,7 +3,8 @@
   "version": "1.0.0",
   "scripts": {
     "dev": "tsx src/dev.ts",
-    "build": "tsc"
+    "build": "tsc",
+    "start": "node dist/server.js"
   },
   "keywords": [],
   "author": "",
