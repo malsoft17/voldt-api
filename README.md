@@ -1,17 +1,18 @@
 # ⚡ Voldt API
 
-A lightweight, fast, and modular REST API built with **TypeScript**.
+A lightweight, fast, and modular REST API built with **TypeScript** and **Fastify**.
 
-Voldt API is designed for building scalable AI-powered services with a clean, maintainable, and extensible architecture. Every endpoint is organized into its own route, making development simple and efficient.
+Voldt API is designed to help developers build scalable, maintainable, and extensible REST APIs. Its modular architecture keeps every endpoint organized, making development, maintenance, and future expansion simple.
 
 ## ✨ Features
 
 - ⚡ Built with **TypeScript**
 - 🚀 Powered by **Fastify**
-- 🤖 AI-focused REST API
 - 📂 Modular route architecture
 - 🧩 Easy to extend and maintain
 - 📖 Optional Swagger/OpenAPI support
+- 📦 Simple project structure
+- 🔌 Plugin-based architecture
 
 ## 📦 Installation
 
@@ -29,11 +30,27 @@ npm install
 npm run dev
 ```
 
-### Production
+### Build
 
 ```bash
 npm run build
+```
+
+### Production
+
+```bash
 npm start
+```
+
+## 📁 Project Structure
+
+```text
+public/
+├── *.html
+
+src/
+├── lib/
+└── routes/
 ```
 
 ## 🛠 Tech Stack
@@ -44,8 +61,8 @@ npm start
 
 ## 🤝 Contributing
 
-Contributions are welcome! Feel free to fork the repository, open an issue, or submit a pull request.
+Contributions are always welcome. Feel free to fork the repository, open an issue, or submit a pull request.
 
 ## 📄 License
 
-This project is licensed under the MIT License.
+This project is licensed under the MIT License. See the `LICENSE` file for more information.
