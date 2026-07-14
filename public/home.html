@@ -20,7 +20,6 @@
         :root {
             --primary: #e85d8f;
             --primary-dark: #cf4779;
-            --primary-soft: rgba(232, 93, 143, 0.25);
             --text: #ffffff;
             --text-soft: rgba(255, 255, 255, 0.82);
             --border: rgba(255, 255, 255, 0.22);
@@ -102,7 +101,7 @@
             width: 100%;
             max-width: 1180px;
             margin: auto;
-            padding: 150px 30px 90px;
+            padding: 135px 30px 70px;
             display: grid;
             grid-template-columns: 1.15fr 0.85fr;
             align-items: center;
@@ -312,34 +311,106 @@
         }
 
         .code-value {
-            color: #ffffff;
+            color: white;
         }
 
-        .features {
+        .website-info {
+            width: 100%;
+            max-width: 1180px;
+            margin: 0 auto;
+            padding: 0 30px 80px;
             display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 12px;
-            margin-top: 18px;
+            grid-template-columns: 1.2fr 0.8fr;
+            gap: 18px;
         }
 
-        .feature {
-            padding: 16px 12px;
-            border-radius: 14px;
-            text-align: center;
-            background: rgba(35, 20, 28, 0.48);
+        .info-card {
+            padding: 20px;
             border: 1px solid var(--border);
+            border-radius: 20px;
+            background: rgba(35, 20, 28, 0.58);
+            box-shadow: var(--shadow);
+            backdrop-filter: blur(18px);
+            -webkit-backdrop-filter: blur(18px);
         }
 
-        .feature strong {
-            display: block;
-            font-size: 18px;
-            color: #ff8fb5;
-            margin-bottom: 5px;
-        }
-
-        .feature span {
+        .info-label {
             color: var(--text-soft);
+            font-size: 12px;
+            font-weight: 700;
+        }
+
+        .developer-list {
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+            gap: 12px;
+            margin-top: 16px;
+        }
+
+        .developer-item {
+            min-width: 0;
+            padding: 16px 10px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            border-radius: 16px;
+            background: rgba(49, 27, 37, 0.48);
+            border: 1px solid rgba(255, 255, 255, 0.10);
+            transition: transform 0.2s ease, background 0.2s ease;
+        }
+
+        .developer-item:hover {
+            transform: translateY(-3px);
+            background: rgba(60, 31, 44, 0.68);
+        }
+
+        .developer-avatar {
+            width: 68px;
+            height: 68px;
+            object-fit: cover;
+            border-radius: 50%;
+            border: 3px solid rgba(232, 93, 143, 0.85);
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.24);
+        }
+
+        .developer-name {
+            width: 100%;
+            margin-top: 11px;
+            color: white;
+            font-size: 14px;
+            font-weight: 800;
+            overflow-wrap: anywhere;
+        }
+
+        .developer-role {
+            margin-top: 5px;
+            color: #ff9abc;
             font-size: 11px;
+            font-weight: 600;
+        }
+
+        .request-card {
+            min-height: 180px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .request-number {
+            color: white;
+            font-size: clamp(36px, 5vw, 54px);
+            line-height: 1;
+            font-weight: 800;
+            letter-spacing: -3px;
+            margin-top: 12px;
+        }
+
+        .request-text {
+            color: var(--text-soft);
+            font-size: 13px;
+            line-height: 1.6;
+            margin-top: 12px;
         }
 
         @media (max-width: 850px) {
@@ -351,6 +422,10 @@
                 grid-template-columns: 1fr;
                 padding-top: 125px;
                 gap: 50px;
+            }
+
+            .website-info {
+                grid-template-columns: 1fr;
             }
 
             h1 {
@@ -384,8 +459,35 @@
                 width: 100%;
             }
 
-            .features {
+            .website-info {
+                padding-left: 20px;
+                padding-right: 20px;
+            }
+
+            .developer-list {
                 grid-template-columns: 1fr;
+            }
+
+            .developer-item {
+                flex-direction: row;
+                text-align: left;
+                padding: 12px;
+                gap: 13px;
+            }
+
+            .developer-avatar {
+                width: 56px;
+                height: 56px;
+                flex-shrink: 0;
+            }
+
+            .developer-name {
+                margin-top: 0;
+                font-size: 15px;
+            }
+
+            .developer-role {
+                margin-top: 4px;
             }
         }
     </style>
@@ -461,6 +563,92 @@
                 </div>
             </section>
         </main>
+
+        <section class="website-info">
+            <div class="info-card">
+                <div class="info-label">Developer Voldt API</div>
+
+                <div class="developer-list">
+                    <div class="developer-item">
+                        <img
+                            src="https://github.com/malsoft17.png"
+                            alt="Profile malsoft17"
+                            class="developer-avatar"
+                            loading="lazy"
+                        >
+
+                        <div>
+                            <div class="developer-name">malsoft17</div>
+                            <div class="developer-role">Developer</div>
+                        </div>
+                    </div>
+
+                    <div class="developer-item">
+                        <img
+                            src="https://github.com/ZaniaXdRun.png"
+                            alt="Profile ZaniaXdRun"
+                            class="developer-avatar"
+                            loading="lazy"
+                        >
+
+                        <div>
+                            <div class="developer-name">ZaniaXdRun</div>
+                            <div class="developer-role">Developer</div>
+                        </div>
+                    </div>
+
+                    <div class="developer-item">
+                        <img
+                            src="https://github.com/MRREMBO.png"
+                            alt="Profile MRREMBO"
+                            class="developer-avatar"
+                            loading="lazy"
+                        >
+
+                        <div>
+                            <div class="developer-name">MRREMBO</div>
+                            <div class="developer-role">Developer</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="info-card request-card">
+                <div class="info-label">Total Request Website</div>
+
+                <div class="request-number" id="totalRequest">0</div>
+
+                <div class="request-text">
+                    Jumlah request yang telah diproses oleh server
+                </div>
+            </div>
+        </section>
     </div>
+
+    <script>
+        const totalRequestElement = document.getElementById("totalRequest")
+
+        async function loadTotalRequest() {
+            try {
+                const response = await fetch("/api/stats")
+                const data = await response.json()
+
+                const total =
+                    data.totalRequest ??
+                    data.totalRequests ??
+                    data.requests ??
+                    data.result?.totalRequest ??
+                    data.result?.totalRequests ??
+                    0
+
+                totalRequestElement.textContent =
+                    Number(total).toLocaleString("id-ID")
+            } catch {
+                totalRequestElement.textContent = "0"
+            }
+        }
+
+        loadTotalRequest()
+    </script>
 </body>
-</html>
+    </html>
