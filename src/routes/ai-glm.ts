@@ -2,7 +2,7 @@ import axios from 'axios';
 import { FastifyInstance } from 'fastify';
 import { OpenAPIV3 } from 'openapi-types';
 
-const path = '/api/ai/glm';
+const path = '/api/ai/Glm 4.7Flash';
 
 const register = (fastify: FastifyInstance) => {
   fastify.get(path, async (req, reply) => {
