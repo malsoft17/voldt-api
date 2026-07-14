@@ -1,57 +1,99 @@
+import axios from 'axios';
+import { FastifyInstance } from 'fastify';
+import { OpenAPIV3 } from 'openapi-types';
 
-import { FastifyPluginAsync } from 'fastify';
+const path = '/api/ai/glm';
 
-
-interface GlmQuery {
-  prompt: string;
-  system?: string;
-  temperature?: number;
-}
-
-const aiGlmRoute: FastifyPluginAsync = async (fastify) => {
-  
-  fastify.get<{ Querystring: GlmQuery }>('/ai/glm', async (request, reply) => {
-    try {
-      
-      const { 
-        prompt, 
-        system = 'You are a helpful assistant.', 
-        temperature = 0.7 
-      } = request.query;
-
-      if (!prompt) {
-        return reply.code(400).send({ 
-          status: false, 
-          message: 'Parameter prompt wajib diisi!' 
-        });
-      }
-
-     
-      const apiUrl = new URL('https://api.siputzx.my.id/api/ai/glm47flash');
-      apiUrl.searchParams.append('prompt', prompt);
-      apiUrl.searchParams.append('system', system);
-      apiUrl.searchParams.append('temperature', temperature.toString());
-
-      
-      const response = await fetch(apiUrl.toString());
-      
-      if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`);
-      }
-      
-      const data = await response.json();
-      
-      // Mengembalikan hasil JSON langsung ke user
-      return reply.code(200).send(data);
-      
-    } catch (error: any) {
-      console.error('Error fetching GLM AI API:', error);
-      return reply.code(500).send({ 
-        status: false, 
-        message: error.message || 'Internal Server Error' 
-      });
-    }
+const register = (fastify: FastifyInstance) => {
+  fastify.get(path, async (req, reply) => {
+    const { prompt, system, temperature } = req.query as { 
+      prompt: string; 
+      system?: string; 
+      temperature?: string; 
+    };
+    
+    const data = await glmAI(prompt, system, temperature);
+    return reply.send(data);
   });
 };
 
-export default aiGlmRoute;
+const docs: OpenAPIV3.PathsObject = {
+  [path]: {
+    get: {
+      summary: 'GLM 4.7 Flash AI',
+      tags: ['AI'],
+      parameters: [
+        {
+          name: 'prompt',
+          in: 'query',
+          required: true,
+          schema: { type: 'string' }
+        },
+        {
+          name: 'system',
+          in: 'query',
+          required: false,
+          schema: { type: 'string', default: 'You are a helpful assistant.' }
+        },
+        {
+          name: 'temperature',
+          in: 'query',
+          required: false,
+          schema: { type: 'string', default: '0.7' }
+        }
+      ],
+      responses: {
+        200: {
+          description: 'OK',
+          content: {
+            'application/json': {
+              schema: {
+                type: 'object',
+                properties: {
+                  status: { type: 'boolean' },
+                  data: {
+                    type: 'object',
+                    properties: {
+                      response: { type: 'string' }
+                    }
+                  },
+                  timestamp: { type: 'string' }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+};
+
+export default {
+  path,
+  register,
+  docs
+};
+
+async function glmAI(prompt: string, system: string = 'You are a helpful assistant.', temperature: string = '0.7') {
+  try {
+    if (!prompt) throw new Error('Parameter prompt is required');
+    
+    const url = 'https://api.siputzx.my.id/api/ai/glm47flash';
+    
+    const { data } = await axios.get(url, {
+      params: {
+        prompt,
+        system,
+        temperature
+      }
+    });
+  
+    return data;
+    
+  } catch (e: any) {
+    return {
+      status: false,
+      message: e.response?.data?.error || e.message
+    };
+  }
+}
