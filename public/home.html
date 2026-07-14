@@ -4,11 +4,19 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="theme-color" content="#e85d8f">
+
     <title>Voldt API</title>
+
+    <link rel="icon" type="image/png" href="/gambar/iconmewing.png">
+    <link rel="apple-touch-icon" href="/gambar/iconmewing.png">
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap"
+        rel="stylesheet"
+    >
 
     <link rel="stylesheet" href="/UI/style.css">
 </head>
@@ -17,11 +25,19 @@
     <div class="page">
         <nav class="navbar">
             <a href="/" class="brand">
-                <div class="brand-icon">V</div>
-                Voldt API
+                <div class="brand-icon">
+                    <img
+                        src="/gambar/iconmewing.png"
+                        alt="Voldt API"
+                    >
+                </div>
+
+                <span>Voldt API</span>
             </a>
 
-            <a href="/docs" class="nav-button">Dokumentasi</a>
+            <a href="/docs" class="nav-button">
+                Dokumentasi
+            </a>
         </nav>
 
         <main class="hero">
@@ -32,12 +48,15 @@
                 </div>
 
                 <h1>
-                    Bangun lebih cepat dengan <span>Voldt API.</span>
+                    Bangun lebih cepat dengan
+                    <span>Voldt API.</span>
                 </h1>
 
                 <p class="description">
-                    Layanan API yang sederhana, andal, dan mudah digunakan untuk membantu pengembang membangun aplikasi dengan lebih cepat.
-                    Jelajahi endpoint yang tersedia dan mulai integrasikan Voldt API ke dalam project kamu.
+                    Layanan API yang sederhana, andal, dan mudah digunakan untuk
+                    membantu pengembang membangun aplikasi dengan lebih cepat.
+                    Jelajahi endpoint yang tersedia dan mulai integrasikan Voldt API
+                    ke dalam project kamu.
                 </p>
 
                 <div class="actions">
@@ -71,6 +90,7 @@
                             {<br>
                             &nbsp;&nbsp;<span class="code-key">"status"</span>:
                             <span class="code-value">true</span>,<br>
+
                             &nbsp;&nbsp;<span class="code-key">"message"</span>:
                             <span class="code-value">"API siap digunakan, Bos!"</span><br>
                             }
@@ -82,7 +102,9 @@
 
         <section class="website-info">
             <div class="info-card">
-                <div class="info-label">Developer Voldt API</div>
+                <div class="info-label">
+                    Developer Voldt API
+                </div>
 
                 <div class="developer-list">
                     <div class="developer-item">
@@ -94,8 +116,13 @@
                         >
 
                         <div>
-                            <div class="developer-name">malsoft17</div>
-                            <div class="developer-role">Developer</div>
+                            <div class="developer-name">
+                                malsoft17
+                            </div>
+
+                            <div class="developer-role">
+                                Developer
+                            </div>
                         </div>
                     </div>
 
@@ -108,8 +135,13 @@
                         >
 
                         <div>
-                            <div class="developer-name">ZaniaXdRun</div>
-                            <div class="developer-role">Developer</div>
+                            <div class="developer-name">
+                                ZaniaXdRun
+                            </div>
+
+                            <div class="developer-role">
+                                Developer
+                            </div>
                         </div>
                     </div>
 
@@ -122,16 +154,29 @@
                         >
 
                         <div>
-                            <div class="developer-name">MRREMBO</div>
-                            <div class="developer-role">Developer</div>
+                            <div class="developer-name">
+                                MRREMBO
+                            </div>
+
+                            <div class="developer-role">
+                                Developer
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
 
             <div class="info-card request-card">
-                <div class="info-label">Total Request Website</div>
-                <div class="request-number" id="totalRequest">0</div>
+                <div class="info-label">
+                    Total Request Website
+                </div>
+
+                <div
+                    class="request-number"
+                    id="totalRequest"
+                >
+                    0
+                </div>
 
                 <div class="request-text">
                     Jumlah request yang telah diproses oleh server
@@ -146,6 +191,11 @@
         async function loadTotalRequest() {
             try {
                 const response = await fetch("/api/stats")
+
+                if (!response.ok) {
+                    throw new Error("Gagal mengambil statistik")
+                }
+
                 const data = await response.json()
 
                 const total =
