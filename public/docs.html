@@ -28,17 +28,12 @@
         :root {
             --primary: #e85d8f;
             --primary-hover: #d84e80;
-
             --text: #ffffff;
-            --text-secondary: rgba(255, 255, 255, 0.68);
-
+            --text-secondary: rgba(255, 255, 255, 0.72);
             --background: #171216;
-
-            --surface: rgba(28, 22, 26, 0.86);
-            --surface-hover: rgba(39, 29, 35, 0.92);
-
-            --border: rgba(255, 255, 255, 0.10);
-
+            --surface: rgba(28, 22, 26, 0.82);
+            --surface-hover: rgba(39, 29, 35, 0.90);
+            --border: rgba(255, 255, 255, 0.12);
             --radius: 12px;
         }
 
@@ -51,39 +46,44 @@
         body {
             margin: 0;
             min-height: 100vh;
-
             font-family: "Inter", sans-serif;
-
             color: var(--text);
+            background: var(--background);
+            position: relative;
+        }
 
-            background-color: var(--background);
-
+        body::before {
+            content: "";
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
             background-image: url("/gambar/bg2.jpg");
-            background-position: center top;
-            background-size: 100% auto;
+            background-position: center center;
+            background-size: cover;
             background-repeat: no-repeat;
-            background-attachment: fixed;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        body > * {
+            position: relative;
+            z-index: 1;
         }
 
         .navbar {
             width: 100%;
             height: 62px;
-
             display: flex;
             align-items: center;
             justify-content: space-between;
-
             padding: 0 5%;
-
             position: sticky;
             top: 0;
-
             z-index: 1000;
-
-            background: rgba(20, 15, 19, 0.82);
-
+            background: rgba(20, 15, 19, 0.72);
             border-bottom: 1px solid var(--border);
-
             backdrop-filter: blur(18px);
             -webkit-backdrop-filter: blur(18px);
         }
@@ -91,13 +91,9 @@
         .brand {
             display: flex;
             align-items: center;
-
             gap: 10px;
-
             text-decoration: none;
-
             color: white;
-
             font-size: 15px;
             font-weight: 700;
         }
@@ -105,133 +101,95 @@
         .brand-icon {
             width: 32px;
             height: 32px;
-
             display: flex;
             align-items: center;
             justify-content: center;
-
             border-radius: 9px;
-
             background: var(--primary);
-
             color: white;
-
             font-size: 14px;
             font-weight: 700;
         }
 
         .home {
             padding: 8px 13px;
-
             border: 1px solid var(--border);
             border-radius: 8px;
-
             text-decoration: none;
-
             color: var(--text-secondary);
-
-            background: rgba(255, 255, 255, 0.04);
-
+            background: rgba(255, 255, 255, 0.05);
             font-size: 13px;
             font-weight: 500;
-
             transition: 0.2s ease;
         }
 
         .home:hover {
             color: white;
-            border-color: rgba(232, 93, 143, 0.5);
-            background: rgba(232, 93, 143, 0.12);
+            border-color: rgba(232, 93, 143, 0.55);
+            background: rgba(232, 93, 143, 0.16);
         }
 
         .docs-header {
             width: 100%;
             max-width: 1100px;
-
             margin: auto;
-
             padding: 55px 24px 30px;
+            text-shadow: 0 2px 15px rgba(0, 0, 0, 0.65);
         }
 
         .docs-label {
             display: inline-flex;
             align-items: center;
-
             gap: 7px;
-
             margin-bottom: 14px;
-
-            color: #f08db1;
-
+            color: #ff9fc1;
             font-size: 12px;
             font-weight: 600;
         }
 
         .docs-label::before {
             content: "";
-
             width: 7px;
             height: 7px;
-
             border-radius: 50%;
-
             background: var(--primary);
         }
 
         .docs-header h1 {
             margin: 0;
-
             max-width: 700px;
-
             color: white;
-
             font-size: clamp(32px, 5vw, 48px);
             font-weight: 700;
-
             line-height: 1.12;
-
             letter-spacing: -2px;
         }
 
         .docs-header p {
             max-width: 620px;
-
             margin: 15px 0 0;
-
-            color: var(--text-secondary);
-
+            color: rgba(255, 255, 255, 0.88);
             font-size: 14px;
-
             line-height: 1.75;
         }
 
         .docs-info {
             max-width: 1100px;
-
             margin: 0 auto 25px;
-
             padding: 0 24px;
-
             display: flex;
             align-items: center;
-
             gap: 8px;
-
             flex-wrap: wrap;
         }
 
         .info-item {
             padding: 7px 11px;
-
             border: 1px solid var(--border);
             border-radius: 7px;
-
             background: rgba(24, 18, 22, 0.72);
-
             color: var(--text-secondary);
-
             font-size: 11px;
-
             backdrop-filter: blur(10px);
             -webkit-backdrop-filter: blur(10px);
         }
@@ -244,9 +202,7 @@
         #swagger-ui {
             width: 100%;
             max-width: 1100px;
-
             margin: auto;
-
             padding: 0 24px 80px;
         }
 
@@ -266,31 +222,23 @@
 
         .swagger-ui .scheme-container {
             margin: 0 0 25px;
-
             padding: 14px 16px;
-
             background: var(--surface);
-
             border: 1px solid var(--border);
             border-radius: var(--radius);
-
             box-shadow: none;
-
             backdrop-filter: blur(16px);
             -webkit-backdrop-filter: blur(16px);
         }
 
         .swagger-ui .scheme-container label {
             color: var(--text-secondary);
-
             font-size: 12px;
         }
 
         .swagger-ui .scheme-container select {
             color: white;
-
-            background: #21191e;
-
+            background: rgba(33, 25, 30, 0.88);
             border: 1px solid var(--border);
             border-radius: 7px;
         }
@@ -302,21 +250,16 @@
 
         .swagger-ui .filter-container .operation-filter-input {
             width: 100%;
-
             padding: 11px 14px;
-
             color: white;
-
             background: rgba(24, 18, 22, 0.82);
-
             border: 1px solid var(--border);
             border-radius: 9px;
-
             font-family: "Inter", sans-serif;
-
             outline: none;
-
             box-shadow: none;
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
         }
 
         .swagger-ui .filter-container .operation-filter-input:focus {
@@ -329,22 +272,17 @@
 
         .swagger-ui .opblock-tag {
             margin: 0 0 12px;
-
             padding: 10px 2px;
-
             color: white;
-
             border-bottom: 1px solid var(--border);
-
             font-family: "Inter", sans-serif;
-
             font-size: 17px;
             font-weight: 600;
+            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.65);
         }
 
         .swagger-ui .opblock-tag small {
             color: var(--text-secondary);
-
             font-size: 11px;
         }
 
@@ -354,28 +292,19 @@
 
         .swagger-ui .opblock {
             margin: 0 0 8px;
-
             overflow: hidden;
-
             background: var(--surface);
-
             border: 1px solid var(--border);
             border-radius: 9px;
-
             box-shadow: none;
-
             backdrop-filter: blur(14px);
             -webkit-backdrop-filter: blur(14px);
-
-            transition:
-                background 0.2s ease,
-                border-color 0.2s ease;
+            transition: background 0.2s ease, border-color 0.2s ease;
         }
 
         .swagger-ui .opblock:hover {
             background: var(--surface-hover);
-
-            border-color: rgba(255, 255, 255, 0.16);
+            border-color: rgba(255, 255, 255, 0.18);
         }
 
         .swagger-ui .opblock.opblock-get,
@@ -384,28 +313,21 @@
         .swagger-ui .opblock.opblock-delete,
         .swagger-ui .opblock.opblock-patch {
             background: var(--surface);
-
             border-color: var(--border);
         }
 
         .swagger-ui .opblock .opblock-summary {
             min-height: 52px;
-
             padding: 7px 10px;
         }
 
         .swagger-ui .opblock .opblock-summary-method {
             min-width: 68px;
-
             padding: 7px 8px;
-
             border-radius: 6px;
-
             font-family: "JetBrains Mono", monospace;
-
             font-size: 10px;
             font-weight: 600;
-
             box-shadow: none;
         }
 
@@ -432,16 +354,13 @@
         .swagger-ui .opblock .opblock-summary-path,
         .swagger-ui .opblock .opblock-summary-path a {
             color: white;
-
             font-family: "JetBrains Mono", monospace;
-
             font-size: 13px;
             font-weight: 500;
         }
 
         .swagger-ui .opblock .opblock-summary-description {
             color: var(--text-secondary);
-
             font-size: 12px;
         }
 
@@ -450,10 +369,8 @@
         }
 
         .swagger-ui .opblock-section-header {
-            background: rgba(255, 255, 255, 0.035);
-
+            background: rgba(255, 255, 255, 0.04);
             box-shadow: none;
-
             border-bottom: 1px solid var(--border);
         }
 
@@ -484,17 +401,13 @@
 
         .swagger-ui .btn {
             border-radius: 7px;
-
             box-shadow: none;
-
             font-family: "Inter", sans-serif;
-
             color: white;
         }
 
         .swagger-ui .btn.execute {
             background: var(--primary);
-
             border-color: var(--primary);
         }
 
@@ -509,12 +422,9 @@
         .swagger-ui textarea,
         .swagger-ui select {
             color: white;
-
-            background: #21191e;
-
+            background: rgba(33, 25, 30, 0.90);
             border: 1px solid var(--border);
             border-radius: 7px;
-
             outline: none;
         }
 
@@ -530,8 +440,7 @@
         }
 
         .swagger-ui .model-box {
-            background: rgba(255, 255, 255, 0.035);
-
+            background: rgba(255, 255, 255, 0.04);
             border-radius: 8px;
         }
 
@@ -544,9 +453,7 @@
 
         .swagger-ui section.models {
             margin: 25px 0 0;
-
             background: var(--surface);
-
             border: 1px solid var(--border);
             border-radius: var(--radius);
         }
@@ -558,7 +465,7 @@
 
         .swagger-ui .highlight-code,
         .swagger-ui .microlight {
-            background: #171216 !important;
+            background: rgba(23, 18, 22, 0.94) !important;
         }
 
         .swagger-ui .highlight-code pre,
@@ -567,15 +474,16 @@
         }
 
         @media (max-width: 768px) {
-            body {
-                background-position: center top;
-                background-size: 100% auto;
-                background-attachment: scroll;
+            body::before {
+                width: 100vw;
+                height: 100dvh;
+                background-position: center center;
+                background-size: cover;
+                background-repeat: no-repeat;
             }
 
             .navbar {
                 height: 58px;
-
                 padding: 0 16px;
             }
 
@@ -585,7 +493,6 @@
 
             .docs-header h1 {
                 font-size: 34px;
-
                 letter-spacing: -1.5px;
             }
 
@@ -595,7 +502,6 @@
 
             .docs-info {
                 padding: 0 18px;
-
                 margin-bottom: 20px;
             }
 
@@ -609,7 +515,6 @@
 
             .swagger-ui .opblock .opblock-summary-method {
                 min-width: 58px;
-
                 font-size: 9px;
             }
 
@@ -626,30 +531,23 @@
 </head>
 
 <body>
-
     <nav class="navbar">
         <a href="/" class="brand">
             <span class="brand-icon">V</span>
             Voldt API
         </a>
 
-        <a href="/" class="home">
-            Beranda
-        </a>
+        <a href="/" class="home">Beranda</a>
     </nav>
 
     <header class="docs-header">
-        <span class="docs-label">
-            API Reference
-        </span>
+        <span class="docs-label">API Reference</span>
 
-        <h1>
-            Dokumentasi Voldt API
-        </h1>
+        <h1>Dokumentasi Voldt API</h1>
 
         <p>
-            REST API gratis tanpa iklan dan pungutan biaya untuk membantu
-            developer mengembangkan bot WhatsApp dan berbagai project lainnya.
+            REST API gratis tanpa iklan dan pungutan biaya untuk membantu developer
+            mengembangkan bot WhatsApp dan berbagai project lainnya.
         </p>
     </header>
 
@@ -683,6 +581,5 @@
             defaultModelsExpandDepth: -1
         })
     </script>
-
 </body>
 </html>
