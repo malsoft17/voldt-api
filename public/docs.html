@@ -40,7 +40,12 @@
         body {
             margin: 0;
             min-height: 100vh;
-            background: var(--background);
+            background:
+                linear-gradient(
+                    rgba(255, 248, 251, 0.86),
+                    rgba(255, 248, 251, 0.86)
+                ),
+                url("/gambar/bg2.jpg") center center / cover no-repeat fixed;
             font-family: "Inter", sans-serif;
         }
 
@@ -53,9 +58,10 @@
             position: sticky;
             top: 0;
             z-index: 999;
-            background: rgba(255, 255, 255, 0.92);
-            border-bottom: 1px solid var(--border);
+            background: rgba(255, 255, 255, 0.78);
+            border-bottom: 1px solid rgba(242, 219, 228, 0.85);
             backdrop-filter: blur(14px);
+            -webkit-backdrop-filter: blur(14px);
         }
 
         .brand {
@@ -88,13 +94,13 @@
             font-size: 13px;
             font-weight: 700;
             border: 1px solid var(--border);
-            background: white;
+            background: rgba(255, 255, 255, 0.78);
             transition: 0.2s ease;
         }
 
         .home:hover {
             color: var(--primary);
-            background: var(--surface-soft);
+            background: rgba(255, 241, 246, 0.92);
         }
 
         .docs-header {
@@ -108,7 +114,7 @@
             padding: 7px 11px;
             border-radius: 999px;
             color: var(--primary-dark);
-            background: var(--primary-soft);
+            background: rgba(255, 220, 232, 0.82);
             font-size: 12px;
             font-weight: 700;
             margin-bottom: 15px;
@@ -149,11 +155,13 @@
         }
 
         .swagger-ui .scheme-container {
-            background: white;
+            background: rgba(255, 255, 255, 0.82);
             border: 1px solid var(--border);
             border-radius: 16px;
             box-shadow: none;
             padding: 18px;
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
         }
 
         .swagger-ui .opblock-tag {
@@ -168,10 +176,12 @@
             overflow: hidden;
             box-shadow: none;
             margin: 0 0 14px;
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
         }
 
         .swagger-ui .opblock.opblock-get {
-            background: #fff5f8;
+            background: rgba(255, 245, 248, 0.86);
             border-color: #efa3bf;
         }
 
@@ -180,7 +190,7 @@
         }
 
         .swagger-ui .opblock.opblock-post {
-            background: #fff2f7;
+            background: rgba(255, 242, 247, 0.86);
             border-color: #e78bad;
         }
 
@@ -189,7 +199,7 @@
         }
 
         .swagger-ui .opblock.opblock-put {
-            background: #fff7fa;
+            background: rgba(255, 247, 250, 0.86);
             border-color: #dca0b7;
         }
 
@@ -198,7 +208,7 @@
         }
 
         .swagger-ui .opblock.opblock-delete {
-            background: #fff0f4;
+            background: rgba(255, 240, 244, 0.86);
             border-color: #cf6f91;
         }
 
@@ -258,11 +268,15 @@
         }
 
         .swagger-ui .model-box {
-            background: var(--surface-soft);
+            background: rgba(255, 241, 246, 0.86);
             border-radius: 10px;
         }
 
         @media (max-width: 600px) {
+            body {
+                background-attachment: scroll;
+            }
+
             .navbar {
                 padding: 0 20px;
             }
