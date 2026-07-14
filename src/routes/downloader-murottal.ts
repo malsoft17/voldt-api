@@ -19,7 +19,7 @@ const register = (fastify: FastifyInstance) => {
 const docs: OpenAPIV3.PathsObject = {
   [path]: {
     get: {
-      summary: 'Download Murottal (Quran.com API)',
+      summary: 'Download Murottal',
       tags: ['Downloader'],
       parameters: [
         {
