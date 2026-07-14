@@ -5,8 +5,13 @@ import { OpenAPIV3 } from 'openapi-types';
 const path = '/api/tools/ipwhois';
 
 const register = (fastify: FastifyInstance) => {
-  fastify.get(path, async (req, reply) => {
-    const { ip } = req.query as { ip?: string };
+  
+  fastify.get<{
+    Querystring: {
+      ip?: string;
+    }
+  }>(path, async (req, reply) => {
+    const { ip } = req.query;
     
     const data = await getIpInfo(ip);
     return reply.send(data);
@@ -22,21 +27,21 @@ const docs: OpenAPIV3.PathsObject = {
         {
           name: 'ip',
           in: 'query',
-          description: 'Masukkan IP Address (Contoh: 8.8.8.8). Jika dikosongkan, akan melacak IP milikmu.',
+          description: 'Masukkan IP Address. Kosongkan untuk melacak IP milikmu.',
           required: false,
           schema: { type: 'string' }
         }
       ],
       responses: {
         200: {
-          description: 'Berhasil mendapatkan data IP',
+          description: 'OK',
           content: {
             'application/json': {
               schema: {
                 type: 'object',
                 properties: {
                   success: { type: 'boolean' },
-                  result: { type: 'object' } 
+                  result: { type: 'object' }
                 }
               }
             }
@@ -56,7 +61,6 @@ export default {
 async function getIpInfo(ip?: string) {
   try {
     const url = ip ? `https://ipwho.is/${ip}` : 'https://ipwho.is/';
-    
     const { data } = await axios.get(url);
     
     if (!data.success) {
@@ -68,7 +72,7 @@ async function getIpInfo(ip?: string) {
   
     return {
       success: true,
-      result: data 
+      result: data
     };
     
   } catch (e: any) {
