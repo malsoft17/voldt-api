@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="theme-color" content="#fff8fb">
+    <meta name="theme-color" content="#e85d8f">
 
     <title>Voldt API Documentation</title>
 
@@ -22,15 +22,13 @@
         }
 
         :root {
-            --background: #fff8fb;
-            --surface: #ffffff;
-            --surface-soft: #fff1f6;
             --primary: #e85d8f;
             --primary-dark: #cf4779;
-            --primary-soft: #ffdce8;
-            --text: #2b2025;
-            --text-soft: #7c6870;
-            --border: #f2dbe4;
+            --text: #ffffff;
+            --text-soft: rgba(255, 255, 255, 0.82);
+            --border: rgba(255, 255, 255, 0.22);
+            --surface: rgba(35, 20, 28, 0.62);
+            --surface-soft: rgba(49, 27, 37, 0.58);
         }
 
         html {
@@ -40,13 +38,9 @@
         body {
             margin: 0;
             min-height: 100vh;
-            background:
-                linear-gradient(
-                    rgba(255, 248, 251, 0.86),
-                    rgba(255, 248, 251, 0.86)
-                ),
-                url("/gambar/bg2.jpg") center center / cover no-repeat fixed;
+            background: url("/gambar/bg2.jpg") center center / cover no-repeat fixed;
             font-family: "Inter", sans-serif;
+            color: var(--text);
         }
 
         .navbar {
@@ -58,8 +52,8 @@
             position: sticky;
             top: 0;
             z-index: 999;
-            background: rgba(255, 255, 255, 0.78);
-            border-bottom: 1px solid rgba(242, 219, 228, 0.85);
+            background: rgba(25, 14, 20, 0.55);
+            border-bottom: 1px solid var(--border);
             backdrop-filter: blur(14px);
             -webkit-backdrop-filter: blur(14px);
         }
@@ -69,7 +63,7 @@
             align-items: center;
             gap: 10px;
             text-decoration: none;
-            color: var(--text);
+            color: white;
             font-size: 18px;
             font-weight: 800;
         }
@@ -94,35 +88,42 @@
             font-size: 13px;
             font-weight: 700;
             border: 1px solid var(--border);
-            background: rgba(255, 255, 255, 0.78);
+            background: rgba(35, 20, 28, 0.55);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
             transition: 0.2s ease;
         }
 
         .home:hover {
-            color: var(--primary);
-            background: rgba(255, 241, 246, 0.92);
+            color: white;
+            background: rgba(232, 93, 143, 0.65);
         }
 
         .docs-header {
             max-width: 1160px;
             margin: auto;
             padding: 55px 28px 25px;
+            text-shadow: 0 3px 18px rgba(0, 0, 0, 0.5);
         }
 
         .docs-badge {
             display: inline-block;
             padding: 7px 11px;
             border-radius: 999px;
-            color: var(--primary-dark);
-            background: rgba(255, 220, 232, 0.82);
+            color: #ffb3cc;
+            background: rgba(35, 20, 28, 0.60);
+            border: 1px solid var(--border);
             font-size: 12px;
             font-weight: 700;
             margin-bottom: 15px;
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            text-shadow: none;
         }
 
         .docs-header h1 {
             margin: 0 0 12px;
-            color: var(--text);
+            color: white;
             font-size: clamp(34px, 6vw, 54px);
             letter-spacing: -2.5px;
         }
@@ -143,7 +144,6 @@
 
         .swagger-ui {
             font-family: "Inter", sans-serif;
-            color: var(--text);
         }
 
         .swagger-ui .topbar {
@@ -155,20 +155,34 @@
         }
 
         .swagger-ui .scheme-container {
-            background: rgba(255, 255, 255, 0.82);
+            background: var(--surface);
             border: 1px solid var(--border);
             border-radius: 16px;
-            box-shadow: none;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.25);
             padding: 18px;
             backdrop-filter: blur(16px);
             -webkit-backdrop-filter: blur(16px);
         }
 
+        .swagger-ui .scheme-container label,
+        .swagger-ui .scheme-container select {
+            color: white;
+        }
+
+        .swagger-ui .scheme-container select {
+            background: rgba(20, 12, 16, 0.75);
+        }
+
         .swagger-ui .opblock-tag {
-            color: var(--text);
+            color: white;
             border-bottom: 1px solid var(--border);
             font-family: "Inter", sans-serif;
             font-size: 20px;
+            text-shadow: 0 2px 12px rgba(0, 0, 0, 0.5);
+        }
+
+        .swagger-ui .opblock-tag svg {
+            fill: white;
         }
 
         .swagger-ui .opblock {
@@ -176,12 +190,12 @@
             overflow: hidden;
             box-shadow: none;
             margin: 0 0 14px;
-            backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px);
+            backdrop-filter: blur(14px);
+            -webkit-backdrop-filter: blur(14px);
         }
 
         .swagger-ui .opblock.opblock-get {
-            background: rgba(255, 245, 248, 0.86);
+            background: rgba(49, 27, 37, 0.72);
             border-color: #efa3bf;
         }
 
@@ -190,7 +204,7 @@
         }
 
         .swagger-ui .opblock.opblock-post {
-            background: rgba(255, 242, 247, 0.86);
+            background: rgba(49, 27, 37, 0.72);
             border-color: #e78bad;
         }
 
@@ -199,7 +213,7 @@
         }
 
         .swagger-ui .opblock.opblock-put {
-            background: rgba(255, 247, 250, 0.86);
+            background: rgba(49, 27, 37, 0.72);
             border-color: #dca0b7;
         }
 
@@ -208,7 +222,7 @@
         }
 
         .swagger-ui .opblock.opblock-delete {
-            background: rgba(255, 240, 244, 0.86);
+            background: rgba(49, 27, 37, 0.72);
             border-color: #cf6f91;
         }
 
@@ -223,18 +237,37 @@
         }
 
         .swagger-ui .opblock .opblock-summary-path {
-            color: var(--text);
+            color: white;
             font-family: monospace;
+        }
+
+        .swagger-ui .opblock .opblock-summary-path a {
+            color: white;
         }
 
         .swagger-ui .opblock .opblock-summary-description {
             color: var(--text-soft);
         }
 
+        .swagger-ui .opblock-description-wrapper p,
+        .swagger-ui .opblock-external-docs-wrapper p,
+        .swagger-ui .opblock-title_normal p,
+        .swagger-ui .parameter__name,
+        .swagger-ui .parameter__type,
+        .swagger-ui .response-col_status,
+        .swagger-ui .response-col_description,
+        .swagger-ui table thead tr td,
+        .swagger-ui table thead tr th,
+        .swagger-ui .responses-inner h4,
+        .swagger-ui .responses-inner h5 {
+            color: white;
+        }
+
         .swagger-ui .btn {
             border-radius: 9px;
             box-shadow: none;
             font-family: "Inter", sans-serif;
+            color: white;
         }
 
         .swagger-ui .btn.execute {
@@ -252,9 +285,16 @@
         .swagger-ui input[type=email],
         .swagger-ui textarea,
         .swagger-ui select {
+            color: white;
+            background: rgba(20, 12, 16, 0.78);
             border: 1px solid var(--border);
             border-radius: 9px;
             outline: none;
+        }
+
+        .swagger-ui input::placeholder,
+        .swagger-ui textarea::placeholder {
+            color: rgba(255, 255, 255, 0.55);
         }
 
         .swagger-ui input:focus,
@@ -263,13 +303,32 @@
             border-color: var(--primary);
         }
 
-        .swagger-ui .response-col_status {
-            color: var(--primary-dark);
+        .swagger-ui .model-box {
+            background: var(--surface-soft);
+            border-radius: 10px;
         }
 
-        .swagger-ui .model-box {
-            background: rgba(255, 241, 246, 0.86);
-            border-radius: 10px;
+        .swagger-ui .model,
+        .swagger-ui .model-title,
+        .swagger-ui .prop-type,
+        .swagger-ui .prop-format {
+            color: white;
+        }
+
+        .swagger-ui section.models {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 14px;
+        }
+
+        .swagger-ui section.models h4,
+        .swagger-ui section.models h4 span {
+            color: white;
+        }
+
+        .swagger-ui .highlight-code,
+        .swagger-ui .microlight {
+            background: rgba(20, 12, 16, 0.88) !important;
         }
 
         @media (max-width: 600px) {
@@ -314,7 +373,7 @@
     <header class="docs-header">
         <span class="docs-badge">API Documentation</span>
 
-        <h1>Explore Voldt API.</h1>
+        <h1>Rest Api Anti iklan dan pungutan biaya</h1>
 
         <p>
             Browse available endpoints, inspect request parameters,
