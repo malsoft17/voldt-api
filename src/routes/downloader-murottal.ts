@@ -5,15 +5,12 @@ import { OpenAPIV3 } from 'openapi-types';
 const path = '/api/downloader/murottal';
 
 const register = (fastify: FastifyInstance) => {
-  
   fastify.get<{
     Querystring: {
       search?: string;
     }
   }>(path, async (req, reply) => {
     const { search } = req.query;
-    
-    
     const data = await getMurottal(search);
     return reply.send(data);
   });
@@ -22,21 +19,20 @@ const register = (fastify: FastifyInstance) => {
 const docs: OpenAPIV3.PathsObject = {
   [path]: {
     get: {
-      summary: 'Download Murottal (Islamipedia)',
+      summary: 'Download Murottal (Quran.com API)',
       tags: ['Downloader'],
       parameters: [
-        
         {
           name: 'search',
           in: 'query',
-          description: 'Cari nama surah (contoh: fatihah). Jika dikosongkan, maka get all surah.',
+          description: 'Cari nama surah (contoh: Fatihah). Kosongkan untuk daftar lengkap.',
           required: false,
           schema: { type: 'string' }
         }
       ],
       responses: {
         200: {
-          description: 'Berhasil mengambil data',
+          description: 'Berhasil mengambil data murottal',
           content: {
             'application/json': {
               schema: {
@@ -48,12 +44,12 @@ const docs: OpenAPIV3.PathsObject = {
                     items: {
                       type: 'object',
                       properties: {
+                        id: { type: 'number' },
                         title: { type: 'string' },
                         audio_url: { type: 'string' }
                       }
                     }
-                  },
-                  message: { type: 'string' }
+                  }
                 }
               }
             }
@@ -64,81 +60,38 @@ const docs: OpenAPIV3.PathsObject = {
   }
 };
 
-export default {
-  path,
-  register,
-  docs
-};
+export default { path, register, docs };
 
 async function getMurottal(searchQuery?: string) {
   try {
-    const targetUrl = 'https://islamipedia.id/murottal/';
-    const { data: html } = await axios.get(targetUrl, {
-      headers: {
-        'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/135.0.0.0 Safari/537.36'
-      }
-    });
-
-    const regex = /href=["']([^"']+\.mp3)["']/gi;
-    let match;
-    const results = [];
-
-    while ((match = regex.exec(html)) !== null) {
-      let audioUrl = match[1];
-
-      if (audioUrl.startsWith('/')) {
-        audioUrl = 'https://islamipedia.id' + audioUrl;
-      } else if (!audioUrl.startsWith('http')) {
-        audioUrl = targetUrl + audioUrl;
-      }
-
-      let title = audioUrl.substring(audioUrl.lastIndexOf('/') + 1).replace('.mp3', '');
-      title = decodeURIComponent(title).replace(/-/g, ' ');
-
-      results.push({
-        title: title,
-        audio_url: audioUrl
-      });
-    }
-
-    if (results.length === 0) {
-      return {
-        success: false,
-        message: 'woila cok file mp3 tidak ditemukan.'
-      };
-    }
+    
+    const { data: quranData } = await axios.get('https://api.quran.com/api/v4/chapters');
+    
+    let results = quranData.chapters.map((chapter: any) => ({
+      id: chapter.id,
+      title: chapter.name_simple,
+      audio_url: `https://verses.quran.com/Alafasy/mp3/${String(chapter.id).padStart(3, '0')}.mp3`
+    }));
 
     
-    let finalResults = results.filter((value, index, self) =>
-      index === self.findIndex((t) => (
-        t.audio_url === value.audio_url
-      ))
-    );
-
-
     if (searchQuery) {
-      finalResults = finalResults.filter((item) => 
+      results = results.filter((item: any) => 
         item.title.toLowerCase().includes(searchQuery.toLowerCase())
       );
-
       
-      if (finalResults.length === 0) {
-        return {
-          success: false,
-          message: `Surah dengan kata kunci '${searchQuery}' tidak ditemukan.`
-        };
+      if (results.length === 0) {
+        return { success: false, message: 'Surah tidak ditemukan.' };
       }
     }
 
     return {
       success: true,
-      result: finalResults
+      result: results
     };
-
   } catch (error: any) {
     return {
       success: false,
-      message: error.message || 'Gagal mengakses website Islamipedia'
+      message: 'Gagal mengambil data dari server Quran.'
     };
   }
 }
