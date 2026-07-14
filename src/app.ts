@@ -3,13 +3,18 @@ import path from 'path';
 import fastifyStatic from '@fastify/static';
 import fastifyMultipart from '@fastify/multipart';
 import { loadRoutes } from './lib/loadRoutes.js';
+import {
+  initStats,
+  incrementRequest,
+  getTotalRequests
+} from './stats.js';
 
 const fastify: FastifyInstance = Fastify({
   logger: true,
   bodyLimit: 100 * 1024 * 1024
 });
 
-let totalApiRequests = 0;
+await initStats();
 
 fastify.addHook('onRequest', async (request, reply) => {
   const pathname = request.url.split('?')[0];
@@ -22,7 +27,7 @@ fastify.addHook('onRequest', async (request, reply) => {
     pathname.startsWith('/api/') &&
     pathname !== '/api/stats'
   ) {
-    totalApiRequests++;
+    await incrementRequest();
   }
 });
 
@@ -52,7 +57,7 @@ const swaggerSpec = {
 fastify.get('/api/stats', async (request, reply) => {
   return reply.send({
     status: true,
-    totalRequest: totalApiRequests
+    totalRequest: getTotalRequests()
   });
 });
 
