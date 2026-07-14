@@ -3,621 +3,167 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="theme-color" content="#171216">
-
-    <title>Voldt API Docs</title>
+    <meta name="theme-color" content="#e85d8f">
+    <title>Voldt API</title>
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
 
-    <link
-        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap"
-        rel="stylesheet"
-    >
-
-    <link
-        rel="stylesheet"
-        href="https://cdn.jsdelivr.net/npm/swagger-ui-dist/swagger-ui.css"
-    >
-
-    <style>
-        * {
-            box-sizing: border-box;
-        }
-
-        :root {
-            --primary: #e85d8f;
-            --primary-hover: #d84e80;
-            --text: #ffffff;
-            --text-secondary: rgba(255, 255, 255, 0.72);
-            --background: #171216;
-            --surface: rgba(28, 22, 26, 0.82);
-            --surface-hover: rgba(39, 29, 35, 0.90);
-            --border: rgba(255, 255, 255, 0.12);
-            --radius: 12px;
-        }
-
-        html {
-            min-height: 100%;
-            scroll-behavior: smooth;
-            background: var(--background);
-        }
-
-        body {
-            margin: 0;
-            min-height: 100vh;
-            font-family: "Inter", sans-serif;
-            color: var(--text);
-            background: var(--background);
-            position: relative;
-        }
-
-        body::before {
-            content: "";
-            position: fixed;
-            inset: 0;
-            width: 100vw;
-            height: 100vh;
-            background-image: url("/gambar/bg2.jpg");
-            background-position: center center;
-            background-size: cover;
-            background-repeat: no-repeat;
-            pointer-events: none;
-            z-index: 0;
-        }
-
-        body > * {
-            position: relative;
-            z-index: 1;
-        }
-
-        .navbar {
-            width: 100%;
-            height: 62px;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            padding: 0 5%;
-            position: sticky;
-            top: 0;
-            z-index: 1000;
-            background: rgba(20, 15, 19, 0.72);
-            border-bottom: 1px solid var(--border);
-            backdrop-filter: blur(18px);
-            -webkit-backdrop-filter: blur(18px);
-        }
-
-        .brand {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            text-decoration: none;
-            color: white;
-            font-size: 15px;
-            font-weight: 700;
-        }
-
-        .brand-icon {
-            width: 32px;
-            height: 32px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            border-radius: 9px;
-            background: var(--primary);
-            color: white;
-            font-size: 14px;
-            font-weight: 700;
-        }
-
-        .home {
-            padding: 8px 13px;
-            border: 1px solid var(--border);
-            border-radius: 8px;
-            text-decoration: none;
-            color: var(--text-secondary);
-            background: rgba(255, 255, 255, 0.05);
-            font-size: 13px;
-            font-weight: 500;
-            transition: 0.2s ease;
-        }
-
-        .home:hover {
-            color: white;
-            border-color: rgba(232, 93, 143, 0.55);
-            background: rgba(232, 93, 143, 0.16);
-        }
-
-        .docs-header {
-            width: 100%;
-            max-width: 1100px;
-            margin: auto;
-            padding: 55px 24px 30px;
-            text-shadow: 0 2px 15px rgba(0, 0, 0, 0.65);
-        }
-
-        .docs-label {
-            display: inline-flex;
-            align-items: center;
-            gap: 7px;
-            margin-bottom: 14px;
-            color: #ff9fc1;
-            font-size: 12px;
-            font-weight: 600;
-        }
-
-        .docs-label::before {
-            content: "";
-            width: 7px;
-            height: 7px;
-            border-radius: 50%;
-            background: var(--primary);
-        }
-
-        .docs-header h1 {
-            margin: 0;
-            max-width: 700px;
-            color: white;
-            font-size: clamp(32px, 5vw, 48px);
-            font-weight: 700;
-            line-height: 1.12;
-            letter-spacing: -2px;
-        }
-
-        .docs-header p {
-            max-width: 620px;
-            margin: 15px 0 0;
-            color: rgba(255, 255, 255, 0.88);
-            font-size: 14px;
-            line-height: 1.75;
-        }
-
-        .docs-info {
-            max-width: 1100px;
-            margin: 0 auto 25px;
-            padding: 0 24px;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            flex-wrap: wrap;
-        }
-
-        .info-item {
-            padding: 7px 11px;
-            border: 1px solid var(--border);
-            border-radius: 7px;
-            background: rgba(24, 18, 22, 0.72);
-            color: var(--text-secondary);
-            font-size: 11px;
-            backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px);
-        }
-
-        .info-item strong {
-            color: white;
-            font-weight: 600;
-        }
-
-        #swagger-ui {
-            width: 100%;
-            max-width: 1100px;
-            margin: auto;
-            padding: 0 24px 80px;
-        }
-
-        .swagger-ui {
-            font-family: "Inter", sans-serif;
-        }
-
-        .swagger-ui .topbar,
-        .swagger-ui .information-container {
-            display: none;
-        }
-
-        .swagger-ui .wrapper {
-            max-width: none;
-            padding: 0;
-        }
-
-        .swagger-ui .scheme-container {
-            margin: 0 0 25px;
-            padding: 14px 16px;
-            background: var(--surface);
-            border: 1px solid var(--border);
-            border-radius: var(--radius);
-            box-shadow: none;
-            backdrop-filter: blur(16px);
-            -webkit-backdrop-filter: blur(16px);
-        }
-
-        .swagger-ui .scheme-container label {
-            color: var(--text-secondary);
-            font-size: 12px;
-        }
-
-        .swagger-ui .scheme-container select {
-            color: white;
-            background: rgba(33, 25, 30, 0.88);
-            border: 1px solid var(--border);
-            border-radius: 7px;
-        }
-
-        .swagger-ui .filter-container {
-            margin: 0 0 25px;
-            padding: 0;
-        }
-
-        .swagger-ui .filter-container .operation-filter-input {
-            width: 100%;
-            padding: 11px 14px;
-            color: white;
-            background: rgba(24, 18, 22, 0.82);
-            border: 1px solid var(--border);
-            border-radius: 9px;
-            font-family: "Inter", sans-serif;
-            outline: none;
-            box-shadow: none;
-            backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px);
-        }
-
-        .swagger-ui .filter-container .operation-filter-input:focus {
-            border-color: rgba(232, 93, 143, 0.65);
-        }
-
-        .swagger-ui .opblock-tag-section {
-            margin-bottom: 28px;
-        }
-
-        .swagger-ui .opblock-tag {
-            margin: 0 0 12px;
-            padding: 10px 2px;
-            color: white;
-            border-bottom: 1px solid var(--border);
-            font-family: "Inter", sans-serif;
-            font-size: 17px;
-            font-weight: 600;
-            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.65);
-        }
-
-        .swagger-ui .opblock-tag small {
-            color: var(--text-secondary);
-            font-size: 11px;
-        }
-
-        .swagger-ui .opblock-tag svg {
-            fill: var(--text-secondary);
-        }
-
-        .swagger-ui .opblock {
-            margin: 0 0 8px;
-            overflow: hidden;
-            background: var(--surface);
-            border: 1px solid var(--border);
-            border-radius: 9px;
-            box-shadow: none;
-            backdrop-filter: blur(14px);
-            -webkit-backdrop-filter: blur(14px);
-            transition: background 0.2s ease, border-color 0.2s ease;
-        }
-
-        .swagger-ui .opblock:hover {
-            background: var(--surface-hover);
-            border-color: rgba(255, 255, 255, 0.18);
-        }
-
-        .swagger-ui .opblock.opblock-get,
-        .swagger-ui .opblock.opblock-post,
-        .swagger-ui .opblock.opblock-put,
-        .swagger-ui .opblock.opblock-delete,
-        .swagger-ui .opblock.opblock-patch {
-            background: var(--surface);
-            border-color: var(--border);
-        }
-
-        .swagger-ui .opblock .opblock-summary {
-            min-height: 52px;
-            padding: 7px 10px;
-        }
-
-        .swagger-ui .opblock .opblock-summary-method {
-            min-width: 68px;
-            padding: 7px 8px;
-            border-radius: 6px;
-            font-family: "JetBrains Mono", monospace;
-            font-size: 10px;
-            font-weight: 600;
-            box-shadow: none;
-        }
-
-        .swagger-ui .opblock.opblock-get .opblock-summary-method {
-            background: #d95989;
-        }
-
-        .swagger-ui .opblock.opblock-post .opblock-summary-method {
-            background: #bc557c;
-        }
-
-        .swagger-ui .opblock.opblock-put .opblock-summary-method {
-            background: #a75b78;
-        }
-
-        .swagger-ui .opblock.opblock-delete .opblock-summary-method {
-            background: #924b68;
-        }
-
-        .swagger-ui .opblock.opblock-patch .opblock-summary-method {
-            background: #c16a8b;
-        }
-
-        .swagger-ui .opblock .opblock-summary-path,
-        .swagger-ui .opblock .opblock-summary-path a {
-            color: white;
-            font-family: "JetBrains Mono", monospace;
-            font-size: 13px;
-            font-weight: 500;
-        }
-
-        .swagger-ui .opblock .opblock-summary-description {
-            color: var(--text-secondary);
-            font-size: 12px;
-        }
-
-        .swagger-ui .opblock-body {
-            border-top: 1px solid var(--border);
-        }
-
-        .swagger-ui .opblock-section-header {
-            background: rgba(255, 255, 255, 0.04);
-            box-shadow: none;
-            border-bottom: 1px solid var(--border);
-        }
-
-        .swagger-ui .opblock-section-header h4,
-        .swagger-ui .opblock-section-header label {
-            color: white;
-        }
-
-        .swagger-ui .opblock-description-wrapper p,
-        .swagger-ui .opblock-external-docs-wrapper p,
-        .swagger-ui .opblock-title_normal p,
-        .swagger-ui .parameter__name,
-        .swagger-ui .parameter__type,
-        .swagger-ui .parameter__deprecated {
-            color: white;
-        }
-
-        .swagger-ui .parameter__type,
-        .swagger-ui .parameter__in {
-            color: var(--text-secondary);
-        }
-
-        .swagger-ui .responses-wrapper .responses-inner > h4,
-        .swagger-ui .responses-wrapper .responses-inner > table.responses-table:not(.live-responses-table) {
-            display: none !important;
-        }
-
-        .swagger-ui .responses-wrapper .live-responses-table {
-            display: table !important;
-        }
-
-        .swagger-ui .response-col_status,
-        .swagger-ui .response-col_description,
-        .swagger-ui .response-col_links,
-        .swagger-ui .responses-inner h4,
-        .swagger-ui .responses-inner h5,
-        .swagger-ui .response-control-media-type__accept-message {
-            color: white;
-        }
-
-        .swagger-ui .btn {
-            border-radius: 7px;
-            box-shadow: none;
-            font-family: "Inter", sans-serif;
-            color: white;
-        }
-
-        .swagger-ui .btn.execute {
-            background: var(--primary);
-            border-color: var(--primary);
-        }
-
-        .swagger-ui .btn.execute:hover {
-            background: var(--primary-hover);
-        }
-
-        .swagger-ui input[type=text],
-        .swagger-ui input[type=password],
-        .swagger-ui input[type=search],
-        .swagger-ui input[type=email],
-        .swagger-ui textarea,
-        .swagger-ui select {
-            color: white;
-            background: rgba(33, 25, 30, 0.90);
-            border: 1px solid var(--border);
-            border-radius: 7px;
-            outline: none;
-        }
-
-        .swagger-ui input:focus,
-        .swagger-ui textarea:focus,
-        .swagger-ui select:focus {
-            border-color: rgba(232, 93, 143, 0.65);
-        }
-
-        .swagger-ui input::placeholder,
-        .swagger-ui textarea::placeholder {
-            color: rgba(255, 255, 255, 0.4);
-        }
-
-        .swagger-ui .model-box {
-            background: rgba(255, 255, 255, 0.04);
-            border-radius: 8px;
-        }
-
-        .swagger-ui .model,
-        .swagger-ui .model-title,
-        .swagger-ui .prop-type,
-        .swagger-ui .prop-format {
-            color: white;
-        }
-
-        .swagger-ui section.models {
-            margin: 25px 0 0;
-            background: var(--surface);
-            border: 1px solid var(--border);
-            border-radius: var(--radius);
-        }
-
-        .swagger-ui section.models h4,
-        .swagger-ui section.models h4 span {
-            color: white;
-        }
-
-        .swagger-ui .highlight-code,
-        .swagger-ui .microlight {
-            background: rgba(23, 18, 22, 0.94) !important;
-        }
-
-        .swagger-ui .highlight-code pre,
-        .swagger-ui .microlight {
-            font-family: "JetBrains Mono", monospace !important;
-        }
-
-        .chibi-loader {
-            width: 100%;
-            min-height: 260px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .chibi-loader img {
-            width: 90px;
-            height: 90px;
-            object-fit: contain;
-            border-radius: 14px;
-        }
-
-        @media (max-width: 768px) {
-            body::before {
-                width: 100vw;
-                height: 100dvh;
-                background-position: center center;
-                background-size: cover;
-                background-repeat: no-repeat;
-            }
-
-            .navbar {
-                height: 58px;
-                padding: 0 16px;
-            }
-
-            .docs-header {
-                padding: 40px 18px 22px;
-            }
-
-            .docs-header h1 {
-                font-size: 34px;
-                letter-spacing: -1.5px;
-            }
-
-            .docs-header p {
-                font-size: 13px;
-            }
-
-            .docs-info {
-                padding: 0 18px;
-                margin-bottom: 20px;
-            }
-
-            #swagger-ui {
-                padding: 0 10px 60px;
-            }
-
-            .swagger-ui .opblock .opblock-summary {
-                align-items: center;
-            }
-
-            .swagger-ui .opblock .opblock-summary-method {
-                min-width: 58px;
-                font-size: 9px;
-            }
-
-            .swagger-ui .opblock .opblock-summary-path,
-            .swagger-ui .opblock .opblock-summary-path a {
-                font-size: 11px;
-            }
-
-            .swagger-ui .opblock .opblock-summary-description {
-                display: none;
-            }
-
-            .chibi-loader img {
-                width: 72px;
-                height: 72px;
-            }
-        }
-    </style>
+    <link rel="stylesheet" href="/UI/style.css">
 </head>
 
-<body>
-    <nav class="navbar">
-        <a href="/" class="brand">
-            <span class="brand-icon">V</span>
-            Voldt API
-        </a>
+<body class="home-page">
+    <div class="page">
+        <nav class="navbar">
+            <a href="/" class="brand">
+                <div class="brand-icon">V</div>
+                Voldt API
+            </a>
 
-        <a href="/" class="home">Beranda</a>
-    </nav>
+            <a href="/docs" class="nav-button">Dokumentasi</a>
+        </nav>
 
-    <header class="docs-header">
-        <span class="docs-label">API Reference</span>
+        <main class="hero">
+            <section class="hero-content">
+                <div class="badge">
+                    <span class="badge-dot"></span>
+                    Layanan API Aktif
+                </div>
 
-        <h1>Dokumentasi Voldt API</h1>
+                <h1>
+                    Bangun lebih cepat dengan <span>Voldt API.</span>
+                </h1>
 
-        <p>
-            REST API gratis tanpa iklan dan pungutan biaya untuk membantu developer
-            mengembangkan bot WhatsApp dan berbagai project lainnya.
-        </p>
-    </header>
+                <p class="description">
+                    Layanan API yang sederhana, andal, dan mudah digunakan untuk membantu pengembang membangun aplikasi dengan lebih cepat.
+                    Jelajahi endpoint yang tersedia dan mulai integrasikan Voldt API ke dalam project kamu.
+                </p>
 
-    <div class="docs-info">
-        <span class="info-item">
-            Format <strong>JSON</strong>
-        </span>
+                <div class="actions">
+                    <a href="/docs" class="button button-primary">
+                        Buka Dokumentasi
+                    </a>
+                </div>
+            </section>
 
-        <span class="info-item">
-            Protocol <strong>HTTPS</strong>
-        </span>
+            <section class="preview">
+                <div class="api-card">
+                    <div class="card-header">
+                        <div class="window-buttons">
+                            <span></span>
+                            <span></span>
+                            <span></span>
+                        </div>
 
-        <span class="info-item">
-            Status <strong>Online</strong>
-        </span>
+                        <div class="status">
+                            Beroperasi Normal
+                        </div>
+                    </div>
+
+                    <div class="endpoint">
+                        <div class="endpoint-title">
+                            <span class="method">GET</span>
+                            <span class="endpoint-path">/api/endpoint</span>
+                        </div>
+
+                        <div class="code">
+                            {<br>
+                            &nbsp;&nbsp;<span class="code-key">"status"</span>:
+                            <span class="code-value">true</span>,<br>
+                            &nbsp;&nbsp;<span class="code-key">"message"</span>:
+                            <span class="code-value">"API siap digunakan, Bos!"</span><br>
+                            }
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </main>
+
+        <section class="website-info">
+            <div class="info-card">
+                <div class="info-label">Developer Voldt API</div>
+
+                <div class="developer-list">
+                    <div class="developer-item">
+                        <img
+                            src="https://github.com/malsoft17.png"
+                            alt="Profile malsoft17"
+                            class="developer-avatar"
+                            loading="lazy"
+                        >
+
+                        <div>
+                            <div class="developer-name">malsoft17</div>
+                            <div class="developer-role">Developer</div>
+                        </div>
+                    </div>
+
+                    <div class="developer-item">
+                        <img
+                            src="https://github.com/ZaniaXdRun.png"
+                            alt="Profile ZaniaXdRun"
+                            class="developer-avatar"
+                            loading="lazy"
+                        >
+
+                        <div>
+                            <div class="developer-name">ZaniaXdRun</div>
+                            <div class="developer-role">Developer</div>
+                        </div>
+                    </div>
+
+                    <div class="developer-item">
+                        <img
+                            src="https://github.com/MRREMBO.png"
+                            alt="Profile MRREMBO"
+                            class="developer-avatar"
+                            loading="lazy"
+                        >
+
+                        <div>
+                            <div class="developer-name">MRREMBO</div>
+                            <div class="developer-role">Developer</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="info-card request-card">
+                <div class="info-label">Total Request Website</div>
+                <div class="request-number" id="totalRequest">0</div>
+
+                <div class="request-text">
+                    Jumlah request yang telah diproses oleh server
+                </div>
+            </div>
+        </section>
     </div>
 
-    <main id="swagger-ui">
-        <div class="chibi-loader">
-            <img
-                src="https://c.tenor.com/1k7Iny2RHjwAAAAd/tenor.gif"
-                alt="Loading"
-            >
-        </div>
-    </main>
-
-    <script src="https://cdn.jsdelivr.net/npm/swagger-ui-dist/swagger-ui-bundle.js"></script>
-
     <script>
-        SwaggerUIBundle({
-            url: "/docs.json",
-            dom_id: "#swagger-ui",
-            deepLinking: true,
-            displayRequestDuration: false,
-            filter: true,
-            tryItOutEnabled: true,
-            docExpansion: "list",
-            defaultModelsExpandDepth: -1
-        })
+        const totalRequestElement = document.getElementById("totalRequest")
+
+        async function loadTotalRequest() {
+            try {
+                const response = await fetch("/api/stats")
+                const data = await response.json()
+
+                const total =
+                    data.totalRequest ??
+                    data.totalRequests ??
+                    data.requests ??
+                    data.result?.totalRequest ??
+                    data.result?.totalRequests ??
+                    0
+
+                totalRequestElement.textContent =
+                    Number(total).toLocaleString("id-ID")
+            } catch {
+                totalRequestElement.textContent = "0"
+            }
+        }
+
+        loadTotalRequest()
     </script>
 </body>
 </html>
