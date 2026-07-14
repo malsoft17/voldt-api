@@ -35,10 +35,10 @@ body {
 
 .home-page .navbar {
     width: 100%;
-    height: 72px;
+    height: 64px;
     display: flex;
     align-items: center;
-    justify-content: space-between;
+    justify-content: flex-start;
     padding: 0 7%;
     background: rgba(25, 14, 20, 0.55);
     border-bottom: 1px solid var(--border);
@@ -53,36 +53,30 @@ body {
 .home-page .brand {
     display: flex;
     align-items: center;
-    gap: 11px;
-    font-size: 20px;
+    gap: 8px;
+    color: white;
+    font-size: 16px;
     font-weight: 800;
-    color: var(--text);
     text-decoration: none;
 }
 
 .home-page .brand-icon {
-    width: 38px;
-    height: 38px;
-    border-radius: 12px;
+    width: 28px;
+    height: 28px;
     display: flex;
     align-items: center;
     justify-content: center;
-    background: var(--primary);
-    color: white;
-    font-size: 18px;
-    font-weight: 800;
+    flex-shrink: 0;
+    overflow: hidden;
+    border-radius: 7px;
+    background: transparent;
 }
 
-.home-page .nav-button {
-    color: var(--text-soft);
-    text-decoration: none;
-    font-size: 14px;
-    font-weight: 600;
-    transition: color 0.2s ease;
-}
-
-.home-page .nav-button:hover {
-    color: #ff9abc;
+.home-page .brand-icon img {
+    width: 100%;
+    height: 100%;
+    display: block;
+    object-fit: contain;
 }
 
 .home-page .hero {
@@ -106,16 +100,16 @@ body {
     align-items: center;
     gap: 8px;
     padding: 8px 13px;
+    margin-bottom: 24px;
+    border: 1px solid var(--border);
     border-radius: 999px;
     background: rgba(35, 20, 28, 0.60);
-    border: 1px solid var(--border);
     color: #ffb3cc;
     font-size: 13px;
     font-weight: 700;
-    margin-bottom: 24px;
+    text-shadow: none;
     backdrop-filter: blur(10px);
     -webkit-backdrop-filter: blur(10px);
-    text-shadow: none;
 }
 
 .home-page .badge-dot {
@@ -127,11 +121,11 @@ body {
 
 .home-page h1 {
     max-width: 680px;
+    margin: 0 0 24px;
     font-size: clamp(44px, 7vw, 78px);
     line-height: 1.02;
     letter-spacing: -4px;
     font-weight: 800;
-    margin: 0 0 24px;
 }
 
 .home-page h1 span {
@@ -140,10 +134,10 @@ body {
 
 .home-page .description {
     max-width: 620px;
+    margin-bottom: 34px;
     color: var(--text-soft);
     font-size: 17px;
     line-height: 1.8;
-    margin-bottom: 34px;
 }
 
 .home-page .actions {
@@ -162,8 +156,8 @@ body {
     font-size: 14px;
     font-weight: 700;
     text-decoration: none;
-    transition: transform 0.2s ease, background 0.2s ease;
     text-shadow: none;
+    transition: transform 0.2s ease, background 0.2s ease;
 }
 
 .home-page .button:hover {
@@ -185,10 +179,10 @@ body {
 }
 
 .home-page .api-card {
+    padding: 20px;
     background: var(--surface);
     border: 1px solid var(--border);
     border-radius: 24px;
-    padding: 20px;
     box-shadow: var(--shadow);
     backdrop-filter: blur(18px);
     -webkit-backdrop-filter: blur(18px);
@@ -226,9 +220,9 @@ body {
     display: flex;
     align-items: center;
     gap: 7px;
+    color: #8ee5ae;
     font-size: 12px;
     font-weight: 700;
-    color: #8ee5ae;
 }
 
 .home-page .status::before {
@@ -242,9 +236,9 @@ body {
 .home-page .endpoint {
     margin-top: 18px;
     padding: 16px;
-    border-radius: 14px;
     background: var(--surface-soft);
     border: 1px solid var(--border);
+    border-radius: 14px;
 }
 
 .home-page .endpoint-title {
@@ -264,14 +258,15 @@ body {
 }
 
 .home-page .endpoint-path {
+    color: white;
     font-family: "JetBrains Mono", monospace;
     font-size: 13px;
     font-weight: 600;
-    color: white;
 }
 
 .home-page .code {
     padding: 17px;
+    overflow: hidden;
     background: rgba(20, 12, 16, 0.80);
     color: #f8dce7;
     border: 1px solid rgba(255, 255, 255, 0.10);
@@ -279,7 +274,6 @@ body {
     font-family: "JetBrains Mono", monospace;
     font-size: 12px;
     line-height: 1.8;
-    overflow: hidden;
 }
 
 .home-page .code-key {
@@ -302,9 +296,9 @@ body {
 
 .home-page .info-card {
     padding: 20px;
+    background: rgba(35, 20, 28, 0.58);
     border: 1px solid var(--border);
     border-radius: 20px;
-    background: rgba(35, 20, 28, 0.58);
     box-shadow: var(--shadow);
     backdrop-filter: blur(18px);
     -webkit-backdrop-filter: blur(18px);
@@ -330,9 +324,9 @@ body {
     flex-direction: column;
     align-items: center;
     text-align: center;
-    border-radius: 16px;
     background: rgba(49, 27, 37, 0.48);
     border: 1px solid rgba(255, 255, 255, 0.10);
+    border-radius: 16px;
     transition: transform 0.2s ease, background 0.2s ease;
 }
 
@@ -345,8 +339,8 @@ body {
     width: 68px;
     height: 68px;
     object-fit: cover;
-    border-radius: 50%;
     border: 3px solid rgba(232, 93, 143, 0.85);
+    border-radius: 50%;
     box-shadow: 0 8px 24px rgba(0, 0, 0, 0.24);
 }
 
@@ -374,19 +368,19 @@ body {
 }
 
 .home-page .request-number {
+    margin-top: 12px;
     color: white;
     font-size: clamp(36px, 5vw, 54px);
     line-height: 1;
     font-weight: 800;
     letter-spacing: -3px;
-    margin-top: 12px;
 }
 
 .home-page .request-text {
+    margin-top: 12px;
     color: var(--text-soft);
     font-size: 13px;
     line-height: 1.6;
-    margin-top: 12px;
 }
 
 .docs-page {
@@ -427,10 +421,10 @@ body {
 .docs-page .navbar {
     width: 100%;
     height: 62px;
+    padding: 0 5%;
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 0 5%;
     position: sticky;
     top: 0;
     z-index: 1000;
@@ -443,35 +437,41 @@ body {
 .docs-page .brand {
     display: flex;
     align-items: center;
-    gap: 10px;
-    text-decoration: none;
+    gap: 8px;
     color: white;
     font-size: 15px;
     font-weight: 700;
+    text-decoration: none;
 }
 
 .docs-page .brand-icon {
-    width: 32px;
-    height: 32px;
+    width: 28px;
+    height: 28px;
     display: flex;
     align-items: center;
     justify-content: center;
-    border-radius: 9px;
-    background: var(--primary);
-    color: white;
-    font-size: 14px;
-    font-weight: 700;
+    flex-shrink: 0;
+    overflow: hidden;
+    border-radius: 7px;
+    background: transparent;
+}
+
+.docs-page .brand-icon img {
+    width: 100%;
+    height: 100%;
+    display: block;
+    object-fit: contain;
 }
 
 .docs-page .home {
     padding: 8px 13px;
-    border: 1px solid var(--border);
-    border-radius: 8px;
-    text-decoration: none;
     color: var(--text-secondary);
     background: rgba(255, 255, 255, 0.05);
+    border: 1px solid var(--border);
+    border-radius: 8px;
     font-size: 13px;
     font-weight: 500;
+    text-decoration: none;
     transition: 0.2s ease;
 }
 
@@ -508,8 +508,8 @@ body {
 }
 
 .docs-page .docs-header h1 {
-    margin: 0;
     max-width: 700px;
+    margin: 0;
     color: white;
     font-size: clamp(32px, 5vw, 48px);
     font-weight: 700;
@@ -537,10 +537,10 @@ body {
 
 .docs-page .info-item {
     padding: 7px 11px;
+    color: var(--text-secondary);
+    background: rgba(24, 18, 22, 0.72);
     border: 1px solid var(--border);
     border-radius: 7px;
-    background: rgba(24, 18, 22, 0.72);
-    color: var(--text-secondary);
     font-size: 11px;
     backdrop-filter: blur(10px);
     -webkit-backdrop-filter: blur(10px);
@@ -761,10 +761,10 @@ body {
 }
 
 .docs-page .swagger-ui .btn {
+    color: white;
     border-radius: 7px;
     box-shadow: none;
     font-family: "Inter", sans-serif;
-    color: white;
 }
 
 .docs-page .swagger-ui .btn.execute {
@@ -856,7 +856,7 @@ body {
 
     .home-page .hero {
         grid-template-columns: 1fr;
-        padding-top: 125px;
+        padding-top: 115px;
         gap: 50px;
     }
 
@@ -923,4 +923,6 @@ body {
         display: none;
     }
 
-    .docs-page .chibi-lo
+    .docs-page .chibi-loader img {
+        width: 72px;
+        height
